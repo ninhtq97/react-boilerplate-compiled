@@ -1,7 +1,7 @@
 {
-  "name": "@reactjs/boilerplate",
+  "name": "@reactjs-modules/boilerplate",
   "version": "0.1.0",
-  "description": "ReactJs - Boilerplate",
+  "description": "ReactJs - Boilerplate (@boilerplate)",
   "private": true,
   "keywords": [
     "react",

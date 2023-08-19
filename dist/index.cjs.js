@@ -29571,12 +29571,6 @@ const InputFile = React.forwardRef(({ className, label, placeholder, disabled, e
                                     : 'border-green-0 bg-green-0 text-green-0'}`, icon: jsxRuntimeExports.jsx(Plus, {}) }), jsxRuntimeExports.jsx("input", { type: "file", className: "ipt-file", ref: $ref, onChange: onChange }), placeholder && (jsxRuntimeExports.jsx("span", { className: "placeholder-file", children: placeholder }))] })), base64 && (jsxRuntimeExports.jsx("div", { className: "file-preview", children: jsxRuntimeExports.jsx("img", { className: "preview-img", src: base64, alt: "" }) }))] }), error && jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-500 ml-2", children: helperText })] }));
 });
 
-const InputPassword = React.forwardRef((props, $ref) => {
-    const [hide, setHide] = React.useState(true);
-    const onToggleHide = () => setHide(!hide);
-    return (jsxRuntimeExports.jsx(Input, { type: hide ? 'password' : 'text', ...props, ref: $ref, iconPosition: props.iconPosition || 'end', icon: props.icon || hide ? (jsxRuntimeExports.jsx(Eye, { className: "cursor-pointer fill-none", onClick: onToggleHide })) : (jsxRuntimeExports.jsx(EyeOff, { className: "cursor-pointer fill-none", onClick: onToggleHide })) }));
-});
-
 const Range = ({ defaultValue, onChange: onChangeProps, min = 0, max = 100, format = 'value', withRangeText = false, ...props }) => {
     const [stateValue, setStateValue] = React.useState(defaultValue || 0);
     const isControlled = Boolean(defaultValue?.toString() && !!onChangeProps);
@@ -29644,6 +29638,11 @@ const Input = React.forwardRef(({ className, inputClassName, tag: Wrapper = 'inp
     return (jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-1 w-full", children: [jsxRuntimeExports.jsxs("div", { className: `form-field ${className || ''}${error ? '!border-rose-500 text-rose-500' : 'text-black-2'}${placeholder || prefix || props.value?.toString().length
                     ? ' has-value'
                     : ''}${disabled ? ' disabled' : ''}${!label ? ' no-label' : ''}`, children: [icon && iconPosition === 'start' && (jsxRuntimeExports.jsxs("div", { className: "icon-field", children: [jsxRuntimeExports.jsx(Icon, { icon: icon }), jsxRuntimeExports.jsx("span", { className: "border-r" })] })), jsxRuntimeExports.jsxs("label", { className: `text-field`, children: [prefix && jsxRuntimeExports.jsx("div", { className: "text-field__prefix", children: prefix }), disabled ? (jsxRuntimeExports.jsx("p", { className: "ipt", ref: $ref, children: props.value })) : (jsxRuntimeExports.jsx(Wrapper, { type: "text", className: `ipt ${inputClassName ? ` ${inputClassName}` : ''}`, ref: $ref, autoComplete: "off", placeholder: placeholder, ...props })), label && (jsxRuntimeExports.jsxs("span", { className: "label-field", children: [label, props.required && jsxRuntimeExports.jsx("span", { className: "text-red-15", children: "*" })] }))] }), icon && iconPosition === 'end' && (jsxRuntimeExports.jsxs("div", { className: "icon-field", children: [jsxRuntimeExports.jsx("span", { className: "border-l" }), jsxRuntimeExports.jsx(Icon, { icon: icon })] }))] }), error && jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-500 ml-2", children: helperText })] }));
+});
+const InputPassword = React.forwardRef((props, $ref) => {
+    const [hide, setHide] = React.useState(true);
+    const onToggleHide = () => setHide(!hide);
+    return (jsxRuntimeExports.jsx(Input, { type: hide ? 'password' : 'text', ...props, ref: $ref, iconPosition: props.iconPosition || 'end', icon: props.icon || hide ? (jsxRuntimeExports.jsx(Eye, { className: "cursor-pointer fill-none", onClick: onToggleHide })) : (jsxRuntimeExports.jsx(EyeOff, { className: "cursor-pointer fill-none", onClick: onToggleHide })) }));
 });
 
 /**
@@ -70011,10 +70010,10 @@ exports.INIT_FILTER = INIT_FILTER;
 exports.INIT_META = INIT_META;
 exports.Icon = Icon;
 exports.Input = Input;
+exports.InputPassword = InputPassword;
 exports.Modal = Modal;
 exports.PAGE = PAGE;
 exports.Pagination = Pagination;
-exports.Password = InputPassword;
 exports.Plus = Plus;
 exports.Popover = Popover;
 exports.Range = Range;

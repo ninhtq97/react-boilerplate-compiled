@@ -1,0 +1,27 @@
+/// <reference types="react" />
+import { Placement } from 'types';
+export type Option = {
+    icon?: React.ReactNode;
+    label: string;
+    value: string | number;
+    suffix?: string;
+};
+type Props = {
+    className?: string;
+    isMultiple?: boolean;
+    isDisable?: boolean;
+    isFilterSearch?: boolean;
+    label?: string;
+    value?: string | number | (string | number)[];
+    placement?: Placement;
+    options: Option[];
+    isLoading?: boolean;
+    placeholder?: string;
+    error?: boolean;
+    helperText?: string;
+    onChange: (selected: string | number | (string | number)[]) => void;
+    keyword?: string;
+    onSearch?: (keyword: string) => void;
+};
+declare const Select: import("react").ForwardRefExoticComponent<Props & import("react").RefAttributes<HTMLDivElement>>;
+export default Select;

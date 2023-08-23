@@ -1468,7 +1468,7 @@ var DATE_FORMAT;
 })(DATE_FORMAT || (DATE_FORMAT = {}));
 
 const CustomDatePicker = ({ error, helperText, ...props }) => {
-    return (jsxRuntimeExports.jsxs("div", { className: `form-picker${props.value?.startDate ? ' has-value' : ''}${props.disabled ? ' disabled' : ''}`, children: [jsxRuntimeExports.jsxs("label", { className: `picker-field ${error ? '!border-rose-500' : ''}`, children: [jsxRuntimeExports.jsx(Datepicker, { inputClassName: `placeholder:text-[15px] placeholder:leading-[22px] !pl-2 focus:ring-0 ${props.placeholder && props.value?.startDate ? '!pb-1 pt-4' : ''}${props.disabled
+    return (jsxRuntimeExports.jsxs("div", { className: `form-picker${props.value?.startDate ? ' has-value' : ''}${props.disabled ? ' disabled' : ''}`, children: [jsxRuntimeExports.jsxs("label", { className: `picker-field ${error ? '!border-rose-500' : ''}`, children: [jsxRuntimeExports.jsx(Datepicker, { inputClassName: `placeholder:text-[15px] placeholder:leading-[22px] !pl-2 focus:ring-0 ${props.placeholder && props.value?.startDate ? '!pb-1 pt-3' : 'py-2'}${props.disabled
                             ? ' !bg-gray-100 disabled:!opacity-100 font-normal text-stone-800'
                             : ''}`, displayFormat: DATE_FORMAT.PICKER, ...props }), jsxRuntimeExports.jsx("span", { className: "label-picker", children: props.placeholder })] }), error && jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-500 ml-2", children: helperText })] }));
 };

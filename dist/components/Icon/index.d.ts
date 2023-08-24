@@ -1,6 +1,7 @@
 /// <reference types="react" />
 type Props = {
     tag?: React.ElementType;
+    badged?: boolean;
     clickable?: boolean;
     icon: React.ReactNode;
 } & React.HTMLProps<HTMLDivElement>;

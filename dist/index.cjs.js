@@ -1455,7 +1455,7 @@ const Eye = (props) => {
 
 const Button = require$$0.forwardRef(({ className, loading = false, loadingPosition = 'start', loadingIndicator, children, variant = 'contained', color = 'success', onClick, ...props }, $ref) => {
     const mapClassname = {
-        primary: 'text-blue-700',
+        primary: 'text-blue-500',
         secondary: 'text-gray-500',
         success: 'text-emerald-500',
         error: 'text-rose-600',

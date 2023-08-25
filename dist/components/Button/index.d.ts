@@ -1,6 +1,5 @@
 import { ComponentProps } from 'react';
 type Props = {
-    icon?: React.ReactNode;
     loading?: boolean;
     loadingPosition?: 'start' | 'end' | 'center';
     loadingIndicator?: string;

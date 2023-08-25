@@ -1,6 +1,7 @@
 /// <reference types="react" />
 import { End, Start } from 'types';
 type Props = {
+    floating?: boolean;
     inputClassName?: string;
     tag?: React.ElementType;
     error?: boolean;

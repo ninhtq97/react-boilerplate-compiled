@@ -32740,7 +32740,7 @@ const Modal = ({ className, width = 650, withCloseIcon = true, disableClickBackd
                                     e.stopPropagation();
                                 }, initial: { scale: 0, opacity: 0 }, animate: isOpen ? 'open' : 'close', variants: {
                                     open: { scale: [0, 1.1, 1], opacity: [0, 1] },
-                                    closed: { scale: [1, 1.1, 0], opacity: [1, 0] },
+                                    close: { scale: [1, 1.1, 0], opacity: [1, 0] },
                                 }, exit: { scale: [1, 1.1, 0], opacity: [1, 0] }, transition: { duration: 0.5 }, children: [renderHeader && (jsxRuntimeExports.jsxs("div", { className: "modal-header", children: [renderHeader({}), withCloseIcon && (jsxRuntimeExports.jsx(Icon, { clickable: true, className: "modal-close", tag: "div", icon: jsxRuntimeExports.jsx(Times, {}), onClick: onClose }))] })), renderContent && (jsxRuntimeExports.jsx("div", { className: "modal-content", children: renderContent({ onClose }) })), renderFooter && (jsxRuntimeExports.jsx("div", { className: "modal-footer", children: renderFooter({ onClose }) }))] }) }) }), document.querySelector('body')) })) })] }));
 };
 

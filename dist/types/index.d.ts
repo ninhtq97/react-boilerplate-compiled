@@ -4,6 +4,10 @@ export type Position = 'top' | 'bottom' | 'left' | 'right';
 export type Start = 'start';
 export type End = 'end';
 export type Placement = `${Position}-${Start}` | Position | `${Position}-${End}`;
+export type TScreenDimension = {
+    width: number;
+    height: number;
+};
 export type TFilter = {
     page: number;
     take: number;

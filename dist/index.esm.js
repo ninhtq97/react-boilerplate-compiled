@@ -1463,6 +1463,7 @@ var DATE_FORMAT;
     DATE_FORMAT["DATE_TIME"] = "dd/MM/yyyy - HH:mm:ss";
     DATE_FORMAT["EN_DATE"] = "yyyy-MM-dd";
     DATE_FORMAT["TIME"] = "HH:mm";
+    DATE_FORMAT["HALF_TIME"] = "hh:mm a";
     DATE_FORMAT["FULLTIME"] = "HH:mm:ss";
     DATE_FORMAT["PICKER"] = "DD/MM/YYYY";
 })(DATE_FORMAT || (DATE_FORMAT = {}));

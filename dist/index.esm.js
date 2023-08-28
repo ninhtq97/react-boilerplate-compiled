@@ -32753,7 +32753,7 @@ const Popover = ({ className, onClose: tellParentToClose, placement = 'bottom', 
     }, [isOpen]);
     useEffect(() => {
         const setPosition = () => {
-            const { top, left } = calcPosition$1(offset, placement, $popoverRef, $linkRef);
+            const { top, left } = calcPosition$1(offset, placement, $linkRef, $popoverRef);
             if ($popoverRef.current) {
                 $popoverRef.current.style.top = `${top}px`;
                 $popoverRef.current.style.left = `${left}px`;
@@ -32771,38 +32771,34 @@ const Popover = ({ className, onClose: tellParentToClose, placement = 'bottom', 
     }, [isOpen, offset, placement]);
     return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [renderLink?.({ ref: $linkRef, onClick: isOpen ? onClose : onOpen }), jsxRuntimeExports.jsx(AnimatePresence, { children: isOpen && renderContent && (jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: reactDomExports.createPortal(jsxRuntimeExports.jsx(motion.div, { className: `popover${className ? ` ${className}` : ''}`, ref: $popoverRef, initial: { y: 8, opacity: 0 }, animate: { y: 0, opacity: 1 }, exit: { y: 8, opacity: 0 }, children: renderContent({ onClose }) }), document.querySelector('body')) })) })] }));
 };
-const calcPosition$1 = (offset, placement, $popoverRef, $linkRef) => {
+const placementOpposition = {
+    start: 'end',
+    end: 'start',
+};
+const reversePlacement = (placement) => {
+    const splitPlacement = placement.split('-');
+    return `${splitPlacement[0]}${splitPlacement[1] && `-${placementOpposition[splitPlacement[1]]}`}`;
+};
+const calcPosition$1 = (offset, placement, $linkRef, $popoverRef) => {
     const margin = 10;
     const finalOffset = { ...offset };
-    if ($popoverRef.current && $linkRef.current) {
-        const popoverRect = $popoverRef.current.getBoundingClientRect();
+    if ($linkRef.current && $popoverRef.current) {
         const linkRect = $linkRef.current.getBoundingClientRect();
+        const popoverRect = $popoverRef.current.getBoundingClientRect();
         const linkCenterY = linkRect.top + linkRect.height / 2;
         const linkCenterX = linkRect.left + linkRect.width / 2;
         const placements = {
             'top-start': {
-                top: linkRect.top - margin - popoverRect.height,
+                top: linkRect.top - popoverRect.height - margin,
                 left: linkRect.left,
             },
             top: {
-                top: linkRect.top - margin - popoverRect.height + window.scrollY,
+                top: linkRect.top - popoverRect.height - margin + window.scrollY,
                 left: linkCenterX - popoverRect.width / 2,
             },
             'top-end': {
-                top: linkRect.top - margin - popoverRect.height,
+                top: linkRect.top - popoverRect.height - margin,
                 left: linkRect.left - popoverRect.width + linkRect.width,
-            },
-            'right-start': {
-                top: linkRect.top,
-                left: linkRect.right + margin,
-            },
-            right: {
-                top: linkCenterY - popoverRect.height / 2,
-                left: linkRect.right + margin,
-            },
-            'right-end': {
-                top: linkRect.bottom - popoverRect.height,
-                left: linkRect.right + margin,
             },
             'bottom-start': {
                 top: linkRect.bottom + margin,
@@ -32828,11 +32824,25 @@ const calcPosition$1 = (offset, placement, $popoverRef, $linkRef) => {
                 top: linkCenterY - popoverRect.height + margin,
                 left: linkRect.left - popoverRect.width - margin,
             },
+            'right-start': {
+                top: linkRect.top,
+                left: linkRect.right + margin,
+            },
+            right: {
+                top: linkCenterY - popoverRect.height / 2,
+                left: linkRect.right + margin,
+            },
+            'right-end': {
+                top: linkRect.bottom - popoverRect.height,
+                left: linkRect.right + margin,
+            },
         };
-        return {
-            top: placements[placement].top + (finalOffset.top ?? 0),
-            left: placements[placement].left + (finalOffset.left ?? 0),
-        };
+        const position = placements[placement];
+        let top = position.top + (finalOffset.top ?? 0), left = position.left + (finalOffset.left ?? 0);
+        if (window.innerHeight - linkRect.bottom - margin < popoverRect.height) {
+            top = placements[reversePlacement(placement)].top;
+        }
+        return { top, left };
     }
     return { top: 0, left: 0 };
 };

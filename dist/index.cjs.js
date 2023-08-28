@@ -32781,7 +32781,7 @@ const Popover = ({ className, onClose: tellParentToClose, placement = 'bottom', 
             window.removeEventListener('scroll', setPosition);
         };
     }, [isOpen, offset, placement]);
-    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [renderLink?.({ ref: $linkRef, onClick: isOpen ? onClose : onOpen }), jsxRuntimeExports.jsx(framerMotion.AnimatePresence, { children: isOpen && renderContent && (jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: jsxRuntimeExports.jsx(framerMotion.motion.div, { className: `popover${className ? ` ${className}` : ''}`, ref: $popoverRef, initial: { y: 8, opacity: 0 }, animate: { y: 0, opacity: 1 }, exit: { y: 8, opacity: 0 }, children: renderContent({ onClose }) }) })) })] }));
+    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [renderLink?.({ ref: $linkRef, onClick: isOpen ? onClose : onOpen }), jsxRuntimeExports.jsx(framerMotion.AnimatePresence, { children: isOpen && renderContent && (jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: reactDomExports.createPortal(jsxRuntimeExports.jsx(framerMotion.motion.div, { className: `popover${className ? ` ${className}` : ''}`, ref: $popoverRef, initial: { y: 8, opacity: 0 }, animate: { y: 0, opacity: 1 }, exit: { y: 8, opacity: 0 }, children: renderContent({ onClose }) }), document.querySelector('body')) })) })] }));
 };
 const placementOpposition = {
     top: 'bottom',

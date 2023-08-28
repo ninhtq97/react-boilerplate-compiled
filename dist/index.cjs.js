@@ -32801,7 +32801,7 @@ const calcPosition$1 = (offset, placement, $linkRef, $popoverRef) => {
         const linkCenterX = linkRect.left + linkRect.width / 2;
         const placements = {
             'top-start': {
-                top: linkRect.top - popoverRect.height - margin,
+                top: linkRect.top - popoverRect.height - margin + window.scrollY,
                 left: linkRect.left,
             },
             top: {
@@ -32809,11 +32809,11 @@ const calcPosition$1 = (offset, placement, $linkRef, $popoverRef) => {
                 left: linkCenterX - popoverRect.width / 2,
             },
             'top-end': {
-                top: linkRect.top - popoverRect.height - margin,
+                top: linkRect.top - popoverRect.height - margin + window.scrollY,
                 left: linkRect.left - popoverRect.width + linkRect.width,
             },
             'bottom-start': {
-                top: linkRect.bottom + margin,
+                top: linkRect.bottom + margin + window.scrollY,
                 left: linkRect.left,
             },
             bottom: {
@@ -32821,31 +32821,31 @@ const calcPosition$1 = (offset, placement, $linkRef, $popoverRef) => {
                 left: linkCenterX - popoverRect.width / 2,
             },
             'bottom-end': {
-                top: linkRect.bottom + margin,
+                top: linkRect.bottom + margin + window.scrollY,
                 left: linkRect.left - popoverRect.width + linkRect.width,
             },
             'left-start': {
-                top: linkCenterY - margin,
+                top: linkCenterY - margin + window.scrollY,
                 left: linkRect.left - popoverRect.width - margin,
             },
             left: {
-                top: linkCenterY - popoverRect.height / 2,
+                top: linkCenterY - popoverRect.height / 2 + window.scrollY,
                 left: linkRect.left - margin - popoverRect.width,
             },
             'left-end': {
-                top: linkCenterY - popoverRect.height + margin,
+                top: linkCenterY - popoverRect.height + margin + window.scrollY,
                 left: linkRect.left - popoverRect.width - margin,
             },
             'right-start': {
-                top: linkRect.top,
+                top: linkRect.top + window.scrollY,
                 left: linkRect.right + margin,
             },
             right: {
-                top: linkCenterY - popoverRect.height / 2,
+                top: linkCenterY - popoverRect.height / 2 + window.scrollY,
                 left: linkRect.right + margin,
             },
             'right-end': {
-                top: linkRect.bottom - popoverRect.height,
+                top: linkRect.bottom - popoverRect.height + window.scrollY,
                 left: linkRect.right + margin,
             },
         };

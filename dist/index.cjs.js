@@ -32781,15 +32781,17 @@ const Popover = ({ className, onClose: tellParentToClose, placement = 'bottom', 
             window.removeEventListener('scroll', setPosition);
         };
     }, [isOpen, offset, placement]);
-    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [renderLink?.({ ref: $linkRef, onClick: isOpen ? onClose : onOpen }), jsxRuntimeExports.jsx(framerMotion.AnimatePresence, { children: isOpen && renderContent && (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(framerMotion.motion.div, { className: `popover${className ? ` ${className}` : ''}`, ref: $popoverRef, initial: { y: 8, opacity: 0 }, animate: { y: 0, opacity: 1 }, exit: { y: 8, opacity: 0 }, children: renderContent({ onClose }) }), ","] })) })] }));
+    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [renderLink?.({ ref: $linkRef, onClick: isOpen ? onClose : onOpen }), jsxRuntimeExports.jsx(framerMotion.AnimatePresence, { children: isOpen && renderContent && (jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: jsxRuntimeExports.jsx(framerMotion.motion.div, { className: `popover${className ? ` ${className}` : ''}`, ref: $popoverRef, initial: { y: 8, opacity: 0 }, animate: { y: 0, opacity: 1 }, exit: { y: 8, opacity: 0 }, children: renderContent({ onClose }) }) })) })] }));
 };
 const placementOpposition = {
+    top: 'bottom',
+    bottom: 'top',
     start: 'end',
     end: 'start',
 };
 const reversePlacement = (placement) => {
     const splitPlacement = placement.split('-');
-    return `${splitPlacement[0]}${splitPlacement[1] && `-${placementOpposition[splitPlacement[1]]}`}`;
+    return `${placementOpposition[splitPlacement[0]] || splitPlacement[0]}${splitPlacement[1] ? `-${placementOpposition[splitPlacement[1]]}` : ''}`;
 };
 const calcPosition$1 = (offset, placement, $linkRef, $popoverRef) => {
     const margin = 10;
@@ -32801,12 +32803,12 @@ const calcPosition$1 = (offset, placement, $linkRef, $popoverRef) => {
         const linkCenterX = linkRect.left + linkRect.width / 2;
         const placements = {
             'top-start': {
-                top: linkRect.top - popoverRect.height - margin + window.scrollY,
-                left: linkRect.left,
+                top: popoverRect.height - margin + window.scrollY,
+                left: 0,
             },
             top: {
                 top: linkRect.top - popoverRect.height - margin + window.scrollY,
-                left: linkCenterX - popoverRect.width / 2,
+                left: 0,
             },
             'top-end': {
                 top: linkRect.top - popoverRect.height - margin + window.scrollY,

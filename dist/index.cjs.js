@@ -1817,7 +1817,7 @@ const InputPassword = require$$0.forwardRef((props, $ref) => {
     const onToggleHide = () => setHide(!hide);
     return (jsxRuntimeExports.jsx(Input, { type: hide ? 'password' : 'text', ...props, ref: $ref, iconPosition: props.iconPosition || 'end', icon: props.icon || hide ? (jsxRuntimeExports.jsx(Eye, { className: "cursor-pointer fill-none", onClick: onToggleHide })) : (jsxRuntimeExports.jsx(EyeOff, { className: "cursor-pointer fill-none", onClick: onToggleHide })) }));
 });
-const ContentEditable = require$$0.forwardRef((props, $ref) => {
+const ContentEditable = require$$0.forwardRef(({ tag = 'span', ...props }, $ref) => {
     const $content = require$$0.useRef(null);
     const replaceCaret = (el) => {
         // Place the caret at the end of the element
@@ -1848,7 +1848,7 @@ const ContentEditable = require$$0.forwardRef((props, $ref) => {
                 ? $ref(current)
                 : $ref && ($ref.current = current);
             $content.current = current;
-        }, onInput: props.onChange, onBlur: props.onBlur || props.onChange, onKeyUp: props.onKeyUp || props.onChange, onKeyDown: props.onKeyDown || props.onChange, dangerouslySetInnerHTML: { __html: (props.value || '').toString() }, ...props }));
+        }, tag: tag, onInput: props.onChange, onBlur: props.onBlur || props.onChange, onKeyUp: props.onKeyUp || props.onChange, onKeyDown: props.onKeyDown || props.onChange, dangerouslySetInnerHTML: { __html: (props.value || '').toString() }, ...props }));
 });
 
 var reactDom = {exports: {}};

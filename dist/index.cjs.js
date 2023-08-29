@@ -1419,8 +1419,8 @@ const Alert = ({ className, size = 'base', variant = 'primary', children, ...pro
     return (jsxRuntimeExports.jsx("span", { className: `alert${className ? ` ${className}` : ''} ${mapClassname[variant]} ${mapSize[size]}`, ...props, children: children }));
 };
 
-const Icon = require$$0.forwardRef(({ className, tag: Wrapper = 'span', badged, clickable, icon, ...props }, $ref) => {
-    return (jsxRuntimeExports.jsx(Wrapper, { className: `icon${badged ? ' badged' : ''}${clickable ? ' cursor-pointer select-none' : ''}${className ? ` ${className}` : ''}`, ref: $ref, ...props, children: icon }));
+const Icon = require$$0.forwardRef(({ className, tag: Wrapper = 'span', badged, clickable, icon, disabled, ...props }, $ref) => {
+    return (jsxRuntimeExports.jsx(Wrapper, { className: `icon${badged ? ' badged' : ''}${!disabled && clickable ? ' cursor-pointer select-none' : ''}${className ? ` ${className}` : ''}`, ref: $ref, ...props, children: icon }));
 });
 const ChevronDown = (props) => {
     return (jsxRuntimeExports.jsx("svg", { width: "12", height: "8", viewBox: "0 0 12 8", fill: "none", xmlns: "http://www.w3.org/2000/svg", ...props, children: jsxRuntimeExports.jsx("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M6.58976 7.08976C6.26434 7.41517 5.73667 7.41517 5.41126 7.08976L0.697206 2.37567C0.371765 2.05027 0.371765 1.52264 0.697206 1.1972C1.02264 0.871767 1.55028 0.871767 1.87571 1.1972L6.00051 5.32201L10.1253 1.1972C10.4508 0.871767 10.9783 0.871767 11.3038 1.1972C11.6293 1.52264 11.6293 2.05027 11.3038 2.37567L6.58976 7.08976Z", fill: "currentColor" }) }));

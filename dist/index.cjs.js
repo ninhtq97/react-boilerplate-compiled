@@ -1481,7 +1481,7 @@ exports.DATE_FORMAT = void 0;
 })(exports.DATE_FORMAT || (exports.DATE_FORMAT = {}));
 
 const CustomDatePicker = ({ error, helperText, ...props }) => {
-    return (jsxRuntimeExports.jsxs("div", { className: `form-picker${props.value?.startDate ? ' has-value' : ''}${props.disabled ? ' disabled' : ''}`, children: [jsxRuntimeExports.jsxs("label", { className: `picker-field ${error ? 'text-rose-500' : ''}`, children: [jsxRuntimeExports.jsx(Datepicker__default["default"], { containerClassName: `relative w-full`, inputClassName: `placeholder:text-current placeholder:text-[.9375rem] placeholder:leading-[1.375rem] !pl-3 focus:ring-0 ${props.placeholder && props.value?.startDate
+    return (jsxRuntimeExports.jsxs("div", { className: `form-picker${props.value?.startDate ? ' has-value' : ''}${props.disabled ? ' disabled' : ''}`, children: [jsxRuntimeExports.jsxs("label", { className: `picker-field ${error ? 'text-rose-500' : ''}`, children: [jsxRuntimeExports.jsx(Datepicker__default["default"], { inputClassName: `${error ? 'placeholder:text-rose-500' : ''} placeholder:text-[.9375rem] placeholder:leading-[1.375rem] !pl-3 focus:ring-0 ${props.placeholder && props.value?.startDate
                             ? '!pb-[.625rem] pt-6'
                             : 'py-[1.063rem]'}${props.disabled
                             ? ' !bg-gray-100 disabled:!opacity-100 font-normal text-stone-800'

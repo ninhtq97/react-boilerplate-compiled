@@ -1488,6 +1488,24 @@ const CustomDatePicker = ({ error, helperText, ...props }) => {
                             : ''}`, displayFormat: exports.DATE_FORMAT.PICKER, ...props }), jsxRuntimeExports.jsx("span", { className: "label-picker", children: props.placeholder })] }), error && jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-500 ml-2", children: helperText })] }));
 };
 
+const InfiniteScroll = require$$0.forwardRef(({ isLoading, hasMore, onNext, loader, children }) => {
+    const observer = require$$0.useRef();
+    const $ref = require$$0.useCallback((node) => {
+        if (isLoading)
+            return;
+        if (observer.current)
+            observer.current.disconnect();
+        observer.current = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && hasMore) {
+                onNext?.();
+            }
+        });
+        if (node)
+            observer.current.observe(node);
+    }, [hasMore, isLoading]);
+    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [children, hasMore && (jsxRuntimeExports.jsx(Icon, { ref: $ref, className: "infinite-loading justify-center", icon: hasMore && (loader || jsxRuntimeExports.jsx(Spinner, { className: "animate-spin" })) }))] }));
+});
+
 const Checkbox = require$$0.forwardRef(({ className, label, disabled, checked: propsIsChecked, onChange: onChangeProps, ...props }, $ref) => {
     const [isChecked, setIsChecked] = require$$0.useState(!!propsIsChecked);
     const isControlled = typeof propsIsChecked === 'boolean';
@@ -33072,6 +33090,7 @@ exports.File = InputFile;
 exports.INIT_FILTER = INIT_FILTER;
 exports.INIT_META = INIT_META;
 exports.Icon = Icon;
+exports.InfiniteScroll = InfiniteScroll;
 exports.Input = Input;
 exports.InputPassword = InputPassword;
 exports.Modal = Modal;

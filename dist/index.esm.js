@@ -1,4 +1,4 @@
-import require$$0, { forwardRef, useState, useCallback, useEffect, useMemo, useRef, useLayoutEffect } from 'react';
+import require$$0, { forwardRef, useRef, useCallback, useState, useEffect, useMemo, useLayoutEffect } from 'react';
 import Datepicker from 'react-tailwindcss-datepicker';
 import axios, { HttpStatusCode } from 'axios';
 import { format } from 'date-fns';
@@ -1475,6 +1475,24 @@ const CustomDatePicker = ({ error, helperText, ...props }) => {
                             ? ' !bg-gray-100 disabled:!opacity-100 font-normal text-stone-800'
                             : ''}`, displayFormat: DATE_FORMAT.PICKER, ...props }), jsxRuntimeExports.jsx("span", { className: "label-picker", children: props.placeholder })] }), error && jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-500 ml-2", children: helperText })] }));
 };
+
+const InfiniteScroll = forwardRef(({ isLoading, hasMore, onNext, loader, children }) => {
+    const observer = useRef();
+    const $ref = useCallback((node) => {
+        if (isLoading)
+            return;
+        if (observer.current)
+            observer.current.disconnect();
+        observer.current = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && hasMore) {
+                onNext?.();
+            }
+        });
+        if (node)
+            observer.current.observe(node);
+    }, [hasMore, isLoading]);
+    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [children, hasMore && (jsxRuntimeExports.jsx(Icon, { ref: $ref, className: "infinite-loading justify-center", icon: hasMore && (loader || jsxRuntimeExports.jsx(Spinner, { className: "animate-spin" })) }))] }));
+});
 
 const Checkbox = forwardRef(({ className, label, disabled, checked: propsIsChecked, onChange: onChangeProps, ...props }, $ref) => {
     const [isChecked, setIsChecked] = useState(!!propsIsChecked);
@@ -33045,5 +33063,5 @@ const calcPosition = (position, $tooltipRef, $linkRef) => {
     return { top: 0, left: 0 };
 };
 
-export { Alert, ArrowLeft, ArrowRight, Button, Check, Checkbox, ChevronDown, ContentEditable, DATE_FORMAT, CustomDatePicker as DatePicker, Eye, EyeOff, InputFile as File, INIT_FILTER, INIT_META, Icon, Input, InputPassword, Modal, PAGE, Pagination, Plus, Popover, Range, Search, Select, Spinner, Switch, Table, Tabs, Times, Tooltip, api, delay, excludeEmptyValue, formatDate, getErrorMessage, getStored, isErrorWithMessage, recursiveRoutes, removeStored, setStore, toCurrency, toErrorWithMessage, toFixedNumber, toIntlNumber, toSlug, unique, useApi, useDebounce, useExport, useFilter, useMeta, useOutsideClick, useToast };
+export { Alert, ArrowLeft, ArrowRight, Button, Check, Checkbox, ChevronDown, ContentEditable, DATE_FORMAT, CustomDatePicker as DatePicker, Eye, EyeOff, InputFile as File, INIT_FILTER, INIT_META, Icon, InfiniteScroll, Input, InputPassword, Modal, PAGE, Pagination, Plus, Popover, Range, Search, Select, Spinner, Switch, Table, Tabs, Times, Tooltip, api, delay, excludeEmptyValue, formatDate, getErrorMessage, getStored, isErrorWithMessage, recursiveRoutes, removeStored, setStore, toCurrency, toErrorWithMessage, toFixedNumber, toIntlNumber, toSlug, unique, useApi, useDebounce, useExport, useFilter, useMeta, useOutsideClick, useToast };
 //# sourceMappingURL=index.esm.js.map

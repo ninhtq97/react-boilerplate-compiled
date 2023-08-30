@@ -1,8 +1,9 @@
-declare const InfiniteScroll: ({ isLoading, hasMore, onNext, loader, children }: {
-    isLoading: any;
-    hasMore: any;
-    onNext: any;
-    loader: any;
-    children: any;
-}) => import("react/jsx-runtime").JSX.Element;
+import { PropsWithChildren } from 'react';
+type Props = {
+    isLoading: boolean;
+    hasMore: boolean;
+    onNext: () => void;
+    loader?: React.ReactNode;
+} & PropsWithChildren;
+declare const InfiniteScroll: React.FC<Props>;
 export default InfiniteScroll;

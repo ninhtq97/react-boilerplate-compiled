@@ -1488,7 +1488,7 @@ const CustomDatePicker = ({ error, helperText, ...props }) => {
                             : ''}`, displayFormat: exports.DATE_FORMAT.PICKER, ...props }), jsxRuntimeExports.jsx("span", { className: "label-picker", children: props.placeholder })] }), error && jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-500 ml-2", children: helperText })] }));
 };
 
-const InfiniteScroll = ({ isLoading, hasMore, onNext, loader, children }) => {
+const InfiniteScroll = ({ isLoading, hasMore, onNext, loader, children, }) => {
     const observer = require$$0.useRef();
     const $ref = require$$0.useCallback((node) => {
         if (isLoading)

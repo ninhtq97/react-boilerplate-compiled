@@ -1555,7 +1555,7 @@ const INIT_META = {
     total: 0,
     totalPage: 0,
     hasPreviousPage: false,
-    hasNextPage: true,
+    hasNextPage: false,
 };
 const INIT_FILTER = {
     page: PAGE.NUMBER,

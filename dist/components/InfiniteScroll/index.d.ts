@@ -1,10 +1,8 @@
-/// <reference types="react" />
-declare const InfiniteScroll: import("react").ForwardRefExoticComponent<{
-    isLoading: boolean;
-    hasMore: boolean;
-    onNext: () => void;
-    loader?: React.ReactNode;
-} & {
-    children?: import("react").ReactNode;
-} & import("react").RefAttributes<HTMLElement>>;
+declare const InfiniteScroll: ({ isLoading, hasMore, onNext, loader, children }: {
+    isLoading: any;
+    hasMore: any;
+    onNext: any;
+    loader: any;
+    children: any;
+}) => import("react/jsx-runtime").JSX.Element;
 export default InfiniteScroll;

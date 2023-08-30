@@ -1476,7 +1476,7 @@ const CustomDatePicker = ({ error, helperText, ...props }) => {
                             : ''}`, displayFormat: DATE_FORMAT.PICKER, ...props }), jsxRuntimeExports.jsx("span", { className: "label-picker", children: props.placeholder })] }), error && jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-500 ml-2", children: helperText })] }));
 };
 
-const InfiniteScroll = forwardRef(({ isLoading, hasMore, onNext, loader, children }) => {
+const InfiniteScroll = ({ isLoading, hasMore, onNext, loader, children }) => {
     const observer = useRef();
     const $ref = useCallback((node) => {
         if (isLoading)
@@ -1492,7 +1492,7 @@ const InfiniteScroll = forwardRef(({ isLoading, hasMore, onNext, loader, childre
             observer.current.observe(node);
     }, [hasMore, isLoading]);
     return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [children, hasMore && (jsxRuntimeExports.jsx(Icon, { ref: $ref, className: "infinite-loading justify-center", icon: hasMore && (loader || jsxRuntimeExports.jsx(Spinner, { className: "animate-spin" })) }))] }));
-});
+};
 
 const Checkbox = forwardRef(({ className, label, disabled, checked: propsIsChecked, onChange: onChangeProps, ...props }, $ref) => {
     const [isChecked, setIsChecked] = useState(!!propsIsChecked);

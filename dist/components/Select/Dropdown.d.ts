@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { Option } from '.';
+import { Option } from 'types';
 type Props = {
     isControlled: boolean;
     value: Option[];

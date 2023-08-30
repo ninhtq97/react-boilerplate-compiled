@@ -1,3 +1,4 @@
+/// <reference types="react" />
 export type Tail<X extends readonly any[]> = ((...args: X) => any) extends (arg: any, ...rest: infer U) => any ? U : never;
 export type Status = 'FAILED' | 'IDLE' | 'LOADING';
 export type Position = 'top' | 'bottom' | 'left' | 'right';
@@ -36,4 +37,10 @@ export type TTimestamp = {
     createdAt: string;
     updatedAt: string;
     deletedAt: string | null;
+};
+export type Option = {
+    icon?: React.ReactNode;
+    label: string;
+    value: string | number;
+    suffix?: string;
 };

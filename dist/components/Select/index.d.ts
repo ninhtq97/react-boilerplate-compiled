@@ -1,11 +1,5 @@
 /// <reference types="react" />
-import { Placement } from 'types';
-export type Option = {
-    icon?: React.ReactNode;
-    label: string;
-    value: string | number;
-    suffix?: string;
-};
+import { Option, Placement } from 'types';
 type Props = {
     className?: string;
     isMultiple?: boolean;

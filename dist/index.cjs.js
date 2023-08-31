@@ -32953,16 +32953,14 @@ const Select = require$$0.forwardRef(function Render({ className, isMultiple, is
         const isArray = Array.isArray(value);
         if (propsOptions.length) {
             const opts = isArray
-                ? value.map((e) => options.find((x) => x.value === e))
-                : [options.find((x) => x.value === value)];
+                ? value
+                : [options.find((x) => x.value === value?.value)];
             defaultSelected = unique(opts.filter((x) => x));
             setSelected(defaultSelected);
         }
     }, [propsOptions, value]);
     const selectOption = (option) => {
-        onChange(isMultiple
-            ? unique([...selected.map((e) => e.value), option.value])
-            : option.value);
+        onChange(isMultiple ? unique([...selected, option]) : option);
         setSelected((prev) => (isMultiple ? unique([...prev, option]) : [option]));
         debounceValue && setSearchValue('');
     };
@@ -32970,7 +32968,7 @@ const Select = require$$0.forwardRef(function Render({ className, isMultiple, is
         e.stopPropagation();
         const restSelected = selected.filter((x) => x.value !== option.value);
         setSelected(restSelected);
-        onChange(restSelected.map((e) => e.value));
+        onChange(restSelected);
     };
     const onChangeKeyword = isControlled ? onSearch : setSearchValue;
     return (jsxRuntimeExports.jsx("div", { className: `select${isMultiple ? ' multiple' : ''}${isDisable ? ` disabled` : ''}${placeholder || selected.length ? ' has-value' : ''}${error ? ' has-error' : ''}${!label ? ' no-label' : ''}`, ref: $ref, children: jsxRuntimeExports.jsx(Popover, { className: "!p-2 border-slate-400 rounded-xl", placement: placement, onClose: () => onChangeKeyword(''), renderLink: ({ onClick, ref }) => (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsxs("div", { className: `select-container${className ? ` ${className}` : ''}`, onClick: onClick, ref: ref, children: [jsxRuntimeExports.jsxs("div", { className: "relative flex flex-col justify-center flex-1", children: [label && jsxRuntimeExports.jsx("div", { className: "select-label", children: label }), jsxRuntimeExports.jsx("div", { className: "select-values", children: selected.length > 0
@@ -33012,7 +33010,7 @@ const Pagination = ({ current, currentSize = PAGE.SIZE, total, totalItem, onChan
     const onChangeSize = (number) => {
         onChange({ page: PAGE.NUMBER, take: number });
     };
-    return (jsxRuntimeExports.jsxs("div", { className: "pagination", children: [withChangeSize && (jsxRuntimeExports.jsxs("div", { className: "pagination-size", children: [jsxRuntimeExports.jsx("p", { className: "pagination-size__label", children: sizeLable }), jsxRuntimeExports.jsx("div", { className: "pagination-size__select", children: jsxRuntimeExports.jsx(Select, { isFilterSearch: false, placement: "top-start", value: currentSize, onChange: (selected) => onChangeSize(Array.isArray(selected) ? +selected[0] : +selected), options: SIZE_OPTIONS }) })] })), jsxRuntimeExports.jsxs("div", { className: `pagination-container ${!withChangeSize ? 'justify-center' : ''}`, children: [current > 1 && (jsxRuntimeExports.jsx(Item, { current: current, number: 1, onClick: () => goToPage(1), children: jsxRuntimeExports.jsx(Icon, { icon: jsxRuntimeExports.jsx(ArrowLeft, {}) }) })), nums.map((number) => (jsxRuntimeExports.jsx(Item, { current: current, number: number, onClick: () => goToPage(number) }, number))), total > 0 && current !== total && (jsxRuntimeExports.jsx(Item, { current: current, number: total, onClick: () => goToPage(total), children: jsxRuntimeExports.jsx(Icon, { icon: jsxRuntimeExports.jsx(ArrowRight, {}) }) }))] })] }));
+    return (jsxRuntimeExports.jsxs("div", { className: "pagination", children: [withChangeSize && (jsxRuntimeExports.jsxs("div", { className: "pagination-size", children: [jsxRuntimeExports.jsx("p", { className: "pagination-size__label", children: sizeLable }), jsxRuntimeExports.jsx("div", { className: "pagination-size__select", children: jsxRuntimeExports.jsx(Select, { isFilterSearch: false, placement: "top-start", value: { label: currentSize.toString(), value: currentSize }, onChange: (selected) => onChangeSize(Array.isArray(selected) ? +selected[0] : +selected), options: SIZE_OPTIONS }) })] })), jsxRuntimeExports.jsxs("div", { className: `pagination-container ${!withChangeSize ? 'justify-center' : ''}`, children: [current > 1 && (jsxRuntimeExports.jsx(Item, { current: current, number: 1, onClick: () => goToPage(1), children: jsxRuntimeExports.jsx(Icon, { icon: jsxRuntimeExports.jsx(ArrowLeft, {}) }) })), nums.map((number) => (jsxRuntimeExports.jsx(Item, { current: current, number: number, onClick: () => goToPage(number) }, number))), total > 0 && current !== total && (jsxRuntimeExports.jsx(Item, { current: current, number: total, onClick: () => goToPage(total), children: jsxRuntimeExports.jsx(Icon, { icon: jsxRuntimeExports.jsx(ArrowRight, {}) }) }))] })] }));
 };
 
 const Table = ({ className, columns, children }) => {

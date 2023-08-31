@@ -6,14 +6,14 @@ type Props = {
     isDisable?: boolean;
     isFilterSearch?: boolean;
     label?: string;
-    value?: Option | Option[];
+    value?: string | number | (string | number)[];
     placement?: Placement;
     options: Option[];
     isLoading?: boolean;
     placeholder?: string;
     error?: boolean;
     helperText?: string;
-    onChange: (selected: Option | Option[]) => void;
+    onChange: (selected: string | number | (string | number)[]) => void;
     keyword?: string;
     onSearch?: (keyword: string) => void;
 };

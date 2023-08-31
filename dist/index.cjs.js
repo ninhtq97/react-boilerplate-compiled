@@ -1643,6 +1643,9 @@ const setStore = (key, data) => {
 };
 const removeStored = (key) => localStorage.removeItem(key);
 
+const capitalize = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+};
 const toFixedNumber = (num, decimals = 2) => {
     return parseFloat(num.toFixed(decimals));
 };
@@ -33108,6 +33111,7 @@ exports.Tabs = Tabs;
 exports.Times = Times;
 exports.Tooltip = Tooltip;
 exports.api = api;
+exports.capitalize = capitalize;
 exports.delay = delay;
 exports.excludeEmptyValue = excludeEmptyValue;
 exports.formatDate = formatDate;

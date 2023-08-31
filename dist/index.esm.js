@@ -1631,6 +1631,9 @@ const setStore = (key, data) => {
 };
 const removeStored = (key) => localStorage.removeItem(key);
 
+const capitalize = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+};
 const toFixedNumber = (num, decimals = 2) => {
     return parseFloat(num.toFixed(decimals));
 };
@@ -33063,5 +33066,5 @@ const calcPosition = (position, $tooltipRef, $linkRef) => {
     return { top: 0, left: 0 };
 };
 
-export { Alert, ArrowLeft, ArrowRight, Button, Check, Checkbox, ChevronDown, ContentEditable, DATE_FORMAT, CustomDatePicker as DatePicker, Eye, EyeOff, InputFile as File, INIT_FILTER, INIT_META, Icon, InfiniteScroll, Input, InputPassword, Modal, PAGE, Pagination, Plus, Popover, Range, Search, Select, Spinner, Switch, Table, Tabs, Times, Tooltip, api, delay, excludeEmptyValue, formatDate, getErrorMessage, getStored, isErrorWithMessage, recursiveRoutes, removeStored, setStore, toCurrency, toErrorWithMessage, toFixedNumber, toIntlNumber, toSlug, unique, useApi, useDebounce, useExport, useFilter, useMeta, useOutsideClick, useToast };
+export { Alert, ArrowLeft, ArrowRight, Button, Check, Checkbox, ChevronDown, ContentEditable, DATE_FORMAT, CustomDatePicker as DatePicker, Eye, EyeOff, InputFile as File, INIT_FILTER, INIT_META, Icon, InfiniteScroll, Input, InputPassword, Modal, PAGE, Pagination, Plus, Popover, Range, Search, Select, Spinner, Switch, Table, Tabs, Times, Tooltip, api, capitalize, delay, excludeEmptyValue, formatDate, getErrorMessage, getStored, isErrorWithMessage, recursiveRoutes, removeStored, setStore, toCurrency, toErrorWithMessage, toFixedNumber, toIntlNumber, toSlug, unique, useApi, useDebounce, useExport, useFilter, useMeta, useOutsideClick, useToast };
 //# sourceMappingURL=index.esm.js.map

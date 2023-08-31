@@ -1,3 +1,4 @@
+export declare const capitalize: (str: string) => string;
 export declare const toFixedNumber: (num: number, decimals?: number) => number;
 export declare const toSlug: (str: string, options?: {
     replacement?: string;

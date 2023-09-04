@@ -1,6 +1,6 @@
 /// <reference types="react" />
 type Props = {
-    inverse: boolean;
+    inverse?: boolean;
     isLoading: boolean;
     hasMore: boolean;
     onNext: () => void;

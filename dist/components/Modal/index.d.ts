@@ -6,6 +6,7 @@ type TRenderContent = {
     onClose: () => void;
 };
 type Props = {
+    container?: string;
     width?: number;
     withCloseIcon?: boolean;
     disableClickBackdrop?: boolean;

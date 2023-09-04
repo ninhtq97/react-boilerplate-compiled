@@ -9,6 +9,7 @@ type RenderContentProps = {
     onClose: () => void;
 };
 type Props = {
+    container?: string;
     placement?: Placement;
     offset?: Offset;
     onClose?: () => void;

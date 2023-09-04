@@ -1,9 +1,10 @@
-import { PropsWithChildren } from 'react';
+/// <reference types="react" />
 type Props = {
+    inverse: boolean;
     isLoading: boolean;
     hasMore: boolean;
     onNext: () => void;
     loader?: React.ReactNode;
-} & PropsWithChildren;
+} & React.HTMLProps<HTMLElement>;
 declare const InfiniteScroll: React.FC<Props>;
 export default InfiniteScroll;

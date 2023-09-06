@@ -32965,7 +32965,7 @@ const Select = forwardRef(function Render({ className, isMultiple, isDisable, is
                                             ? selected.map((s, i) => (jsxRuntimeExports.jsxs("div", { className: "select-value", children: [jsxRuntimeExports.jsxs("div", { className: "select-value__content", children: [s.icon, jsxRuntimeExports.jsx("span", { className: "", children: s.label })] }), isMultiple && (jsxRuntimeExports.jsx(Icon, { className: "select-value__remove", tag: "div", icon: jsxRuntimeExports.jsx(Times, {}), onClick: (e) => removeSelected(e, s) }))] }, s.value)))
                                             : placeholder && (jsxRuntimeExports.jsx("span", { className: "select-placeholder", children: placeholder })) })] }), jsxRuntimeExports.jsx("div", { className: "flex gap-1", children: jsxRuntimeExports.jsx(Icon, { className: "text-slate-400 items-center justify-center text-base w-6 h-6", tag: "div", icon: jsxRuntimeExports.jsx(ChevronDown, {}) }) })] }), helperText && (jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-500 ml-2", children: helperText }))] })), renderContent: ({ onClose }) => (jsxRuntimeExports.jsx(Dropdown, { isControlled: isControlled, value: selected, options: propsOptions, onChange: selectOption, deactivateDropdown: () => {
                     onClose();
-                    onChangeKeyword('');
+                    keyword && onChangeKeyword('');
                 }, isLoading: isLoading, isFilterSearch: isFilterSearch, searchValue: keyword, setSearchValue: onChangeKeyword })) }) }));
 });
 

@@ -1,2 +1,2 @@
-declare const useDebounce: (value: any, delay: number) => any;
+declare const useDebounce: <T>(value: T, delay?: number) => T;
 export default useDebounce;

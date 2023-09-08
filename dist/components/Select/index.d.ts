@@ -2,6 +2,7 @@
 import { Option, Placement } from 'types';
 type Props = {
     className?: string;
+    popoverClassName?: string;
     isMultiple?: boolean;
     isDisable?: boolean;
     isFilterSearch?: boolean;

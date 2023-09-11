@@ -32917,7 +32917,6 @@ const calcPosition$1 = (offset, placement, $linkRef, $popoverRef) => {
         const position = placements[placement];
         let top = position.top + (finalOffset.top ?? 0), left = position.left + (finalOffset.left ?? 0);
         if (window.innerHeight - linkRect.bottom - margin < popoverRect.height) {
-            console.log('Vertical reverse:', reverseVertical(placement));
             const reversePosition = placements[reverseVertical(placement)];
             top = reversePosition.top;
         }

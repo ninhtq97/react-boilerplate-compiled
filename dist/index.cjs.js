@@ -32799,7 +32799,7 @@ const Modal = ({ className, container = 'body', width = 650, withCloseIcon = tru
                                 }, exit: { scale: [1, 1.1, 0], opacity: [1, 0] }, transition: { duration: 0.5 }, children: [renderHeader && (jsxRuntimeExports.jsxs("div", { className: "modal-header", children: [renderHeader({}), withCloseIcon && (jsxRuntimeExports.jsx(Icon, { clickable: true, className: "modal-close", tag: "div", icon: jsxRuntimeExports.jsx(Times, {}), onClick: onClose }))] })), renderContent && (jsxRuntimeExports.jsx("div", { className: "modal-content", children: renderContent({ onClose }) })), renderFooter && (jsxRuntimeExports.jsx("div", { className: "modal-footer", children: renderFooter({ onClose }) }))] }) }) }), document.querySelector(container)) })) })] }));
 };
 
-const Popover = ({ className, container = 'body', onClose: tellParentToClose, placement = 'bottom', offset = { top: 0, left: 0 }, renderLink, renderContent, }) => {
+const Popover = ({ className, container = 'body', scrollableTarget, onClose: tellParentToClose, placement = 'bottom', offset = { top: 0, left: 0 }, renderLink, renderContent, }) => {
     const [isOpen, setStateOpen] = require$$0.useState(false);
     const $linkRef = require$$0.useRef(null);
     const $popoverRef = require$$0.useRef(null);
@@ -32825,27 +32825,36 @@ const Popover = ({ className, container = 'body', onClose: tellParentToClose, pl
                 $popoverRef.current.style.left = `${left}px`;
             }
         };
+        const $listeningScroll = (scrollableTarget || {}).current || window;
         if (isOpen) {
             setPosition();
-            window.addEventListener('resize', setPosition);
-            window.addEventListener('scroll', setPosition);
+            $listeningScroll.addEventListener('resize', setPosition);
+            $listeningScroll.addEventListener('scroll', setPosition);
         }
         return () => {
-            window.removeEventListener('resize', setPosition);
-            window.removeEventListener('scroll', setPosition);
+            $listeningScroll.removeEventListener('resize', setPosition);
+            $listeningScroll.removeEventListener('scroll', setPosition);
         };
-    }, [isOpen, offset, placement]);
+    }, [isOpen, offset, placement, scrollableTarget]);
     return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [renderLink?.({ ref: $linkRef, onClick: isOpen ? onClose : onOpen }), jsxRuntimeExports.jsx(framerMotion.AnimatePresence, { children: isOpen && renderContent && (jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: reactDomExports.createPortal(jsxRuntimeExports.jsx(framerMotion.motion.div, { className: `popover${className ? ` ${className}` : ''}`, ref: $popoverRef, initial: { y: 8, opacity: 0 }, animate: { y: 0, opacity: 1 }, exit: { y: 8, opacity: 0 }, children: renderContent({ onClose }) }), document.querySelector(container)) })) })] }));
 };
-const placementOpposition = {
+const verticalOpposition = {
     top: 'bottom',
     bottom: 'top',
     start: 'end',
     end: 'start',
 };
-const reversePlacement = (placement) => {
+const horizontalOpposition = {
+    left: 'right',
+    right: 'left',
+};
+const reverseVertical = (placement) => {
     const splitPlacement = placement.split('-');
-    return `${placementOpposition[splitPlacement[0]] || splitPlacement[0]}${splitPlacement[1] ? `-${placementOpposition[splitPlacement[1]]}` : ''}`;
+    return `${verticalOpposition[splitPlacement[0]] || splitPlacement[0]}${splitPlacement[1] ? `-${verticalOpposition[splitPlacement[1]]}` : ''}`;
+};
+const reverseHorizontal = (placement) => {
+    const splitPlacement = placement.split('-');
+    return `${horizontalOpposition[splitPlacement[0]] || splitPlacement[0]}${splitPlacement[1] ? `-${splitPlacement[1]}` : ''}`;
 };
 const calcPosition$1 = (offset, placement, $linkRef, $popoverRef) => {
     const margin = 10;
@@ -32858,11 +32867,11 @@ const calcPosition$1 = (offset, placement, $linkRef, $popoverRef) => {
         const placements = {
             'top-start': {
                 top: popoverRect.height - margin + window.scrollY,
-                left: 0,
+                left: linkRect.left,
             },
             top: {
                 top: linkRect.top - popoverRect.height - margin + window.scrollY,
-                left: 0,
+                left: linkCenterX - popoverRect.width / 2,
             },
             'top-end': {
                 top: linkRect.top - popoverRect.height - margin + window.scrollY,
@@ -32908,7 +32917,14 @@ const calcPosition$1 = (offset, placement, $linkRef, $popoverRef) => {
         const position = placements[placement];
         let top = position.top + (finalOffset.top ?? 0), left = position.left + (finalOffset.left ?? 0);
         if (window.innerHeight - linkRect.bottom - margin < popoverRect.height) {
-            top = placements[reversePlacement(placement)].top;
+            console.log('Vertical reverse:', reverseVertical(placement));
+            const reversePosition = placements[reverseVertical(placement)];
+            top = reversePosition.top;
+        }
+        if (linkRect.left < popoverRect.width ||
+            window.innerWidth - linkRect.right - margin < popoverRect.width) {
+            const reversePosition = placements[reverseHorizontal(placement)];
+            left = reversePosition.left;
         }
         return { top, left };
     }

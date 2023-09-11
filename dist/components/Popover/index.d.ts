@@ -10,6 +10,7 @@ type RenderContentProps = {
 };
 type Props = {
     container?: string;
+    scrollableTarget?: React.RefObject<HTMLElement>;
     placement?: Placement;
     offset?: Offset;
     onClose?: () => void;

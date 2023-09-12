@@ -2,6 +2,7 @@
 import { End, Start } from 'types';
 type Props = {
     floating?: boolean;
+    containerClassName?: string;
     inputClassName?: string;
     tag?: React.ElementType;
     error?: boolean;

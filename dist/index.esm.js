@@ -1849,7 +1849,7 @@ const ContentEditable = forwardRef(({ tag = 'span', ...props }, $ref) => {
         if (!$content.current)
             return;
         replaceCaret($content.current);
-    }, [props.value]);
+    }, [props.value, props.error, props.helperText]);
     return (jsxRuntimeExports.jsx(Input, { ref: (current) => {
             typeof $ref === 'function'
                 ? $ref(current)

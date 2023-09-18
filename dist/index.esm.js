@@ -1825,37 +1825,7 @@ const InputPassword = forwardRef((props, $ref) => {
     return (jsxRuntimeExports.jsx(Input, { type: hide ? 'password' : 'text', ...props, ref: $ref, iconPosition: props.iconPosition || 'end', icon: props.icon || hide ? (jsxRuntimeExports.jsx(Eye, { className: "cursor-pointer fill-none", onClick: onToggleHide })) : (jsxRuntimeExports.jsx(EyeOff, { className: "cursor-pointer fill-none", onClick: onToggleHide })) }));
 });
 const ContentEditable = forwardRef(({ tag = 'span', ...props }, $ref) => {
-    const $content = useRef(null);
-    const replaceCaret = (el) => {
-        // Place the caret at the end of the element
-        const target = document.createTextNode('');
-        el.appendChild(target);
-        // do not move caret if element was not focused
-        const isTargetFocused = document.activeElement === el;
-        if (target !== null && target.nodeValue !== null && isTargetFocused) {
-            var sel = window.getSelection();
-            if (sel !== null) {
-                var range = document.createRange();
-                range.setStart(target, target.nodeValue.length);
-                range.collapse(true);
-                sel.removeAllRanges();
-                sel.addRange(range);
-            }
-            if (el instanceof HTMLElement)
-                el.focus();
-        }
-    };
-    useEffect(() => {
-        if (!$content.current)
-            return;
-        replaceCaret($content.current);
-    }, [props.value, props.error, props.helperText]);
-    return (jsxRuntimeExports.jsx(Input, { ref: (current) => {
-            typeof $ref === 'function'
-                ? $ref(current)
-                : $ref && ($ref.current = current);
-            $content.current = current;
-        }, tag: tag, onInput: props.onChange, onBlur: props.onBlur || props.onChange, onKeyUp: props.onKeyUp || props.onChange, onKeyDown: props.onKeyDown || props.onChange, dangerouslySetInnerHTML: { __html: (props.value || '').toString() }, ...props }));
+    return (jsxRuntimeExports.jsx(Input, { ref: $ref, tag: tag, onBlur: props.onBlur || props.onChange, contentEditable: !props.disabled, dangerouslySetInnerHTML: { __html: (props.value || '').toString() }, ...props }));
 });
 
 var reactDom = {exports: {}};

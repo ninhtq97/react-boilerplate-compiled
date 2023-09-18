@@ -13,7 +13,7 @@ type Props = {
 } & React.HTMLProps<HTMLInputElement>;
 export declare const Input: import("react").ForwardRefExoticComponent<Omit<Props, "ref"> & import("react").RefAttributes<HTMLInputElement>>;
 export declare const InputPassword: import("react").ForwardRefExoticComponent<Omit<Omit<Props, "ref"> & import("react").RefAttributes<HTMLInputElement>, "ref"> & import("react").RefAttributes<HTMLInputElement>>;
-export declare const ContentEditable: import("react").ForwardRefExoticComponent<Omit<Omit<Props, "ref"> & import("react").RefAttributes<HTMLInputElement>, "ref"> & import("react").RefAttributes<HTMLElement>>;
+export declare const ContentEditable: import("react").ForwardRefExoticComponent<Omit<Omit<Props, "ref"> & import("react").RefAttributes<HTMLInputElement>, "ref"> & import("react").RefAttributes<HTMLInputElement>>;
 export { default as Checkbox } from './Checkbox';
 export { default as File } from './File';
 export { default as Range } from './Range';

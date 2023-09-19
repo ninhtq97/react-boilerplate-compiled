@@ -1443,12 +1443,12 @@ const Eye = (props) => {
 
 const Button = forwardRef(({ className, loading = false, loadingPosition = 'start', loadingIndicator, children, variant = 'contained', color = 'primary', onClick, ...props }, $ref) => {
     const mapClassname = {
-        primary: 'text-blue-400 hover:hover:text-opacity-80',
-        secondary: 'text-gray-400 hover:hover:text-opacity-80',
-        success: 'text-emerald-400 hover:hover:text-opacity-80',
-        error: 'text-rose-500 hover:hover:text-opacity-80',
-        info: 'text-blue-500 hover:hover:text-opacity-80',
-        warning: 'text-orange-400 hover:hover:text-opacity-80',
+        primary: 'text-blue-400 hover:text-opacity-80',
+        secondary: 'text-gray-400 hover:text-opacity-80',
+        success: 'text-emerald-400 hover:text-opacity-80',
+        error: 'text-rose-500 hover:text-opacity-80',
+        info: 'text-blue-500 hover:text-opacity-80',
+        warning: 'text-orange-400 hover:text-opacity-80',
     };
     return (jsxRuntimeExports.jsx("button", { className: `btn${variant === 'outlined' ? ` ${variant}` : ''}${className ? ` ${className}` : ''} ${mapClassname[color]}`, disabled: loading, onClick: loading ? undefined : onClick, ...props, ref: $ref, children: loading ? (jsxRuntimeExports.jsxs("div", { className: `flex items-center gap-2 ${loading && variant === 'outlined'
                 ? mapClassname[color]
@@ -1823,9 +1823,6 @@ const InputPassword = forwardRef((props, $ref) => {
     const [hide, setHide] = useState(true);
     const onToggleHide = () => setHide(!hide);
     return (jsxRuntimeExports.jsx(Input, { type: hide ? 'password' : 'text', ...props, ref: $ref, iconPosition: props.iconPosition || 'end', icon: props.icon || hide ? (jsxRuntimeExports.jsx(Eye, { className: "cursor-pointer fill-none", onClick: onToggleHide })) : (jsxRuntimeExports.jsx(EyeOff, { className: "cursor-pointer fill-none", onClick: onToggleHide })) }));
-});
-const ContentEditable = forwardRef(({ tag = 'span', ...props }, $ref) => {
-    return (jsxRuntimeExports.jsx(Input, { ref: $ref, tag: tag, onBlur: props.onBlur || props.onChange, contentEditable: !props.disabled, dangerouslySetInnerHTML: { __html: (props.value || '').toString() }, ...props }));
 });
 
 var reactDom = {exports: {}};
@@ -33049,5 +33046,5 @@ const calcPosition = (position, $tooltipRef, $linkRef) => {
     return { top: 0, left: 0 };
 };
 
-export { Alert, ArrowLeft, ArrowRight, Button, Check, Checkbox, ChevronDown, ContentEditable, DATE_FORMAT, CustomDatePicker as DatePicker, Eye, EyeOff, InputFile as File, INIT_FILTER, INIT_META, Icon, InfiniteScroll, Input, InputPassword, Modal, PAGE, Pagination, Plus, Popover, Range, Search, Select, Spinner, Switch, Table, Tabs, Times, Tooltip, api, capitalize, delay, excludeEmptyValue, formatDate, getErrorMessage, getStored, isErrorWithMessage, recursiveRoutes, removeStored, setStore, toCurrency, toErrorWithMessage, toFixedNumber, toIntlNumber, toSlug, unique, useApi, useDebounce, useExport, useFilter, useMeta, useOutsideClick, useToast };
+export { Alert, ArrowLeft, ArrowRight, Button, Check, Checkbox, ChevronDown, DATE_FORMAT, CustomDatePicker as DatePicker, Eye, EyeOff, InputFile as File, INIT_FILTER, INIT_META, Icon, InfiniteScroll, Input, InputPassword, Modal, PAGE, Pagination, Plus, Popover, Range, Search, Select, Spinner, Switch, Table, Tabs, Times, Tooltip, api, capitalize, delay, excludeEmptyValue, formatDate, getErrorMessage, getStored, isErrorWithMessage, recursiveRoutes, removeStored, setStore, toCurrency, toErrorWithMessage, toFixedNumber, toIntlNumber, toSlug, unique, useApi, useDebounce, useExport, useFilter, useMeta, useOutsideClick, useToast };
 //# sourceMappingURL=index.esm.js.map

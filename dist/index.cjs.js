@@ -32747,10 +32747,9 @@ const InputPassword = require$$0.forwardRef((props, $ref) => {
 });
 const TextareaAutosize = require$$0.forwardRef(({ minRows, maxRows, container = 'body', ...props }, $ref) => {
     const $content = require$$0.useRef(null);
-    const $innerRef = require$$0.useMemo(() => (typeof $ref === 'function' ? { current: null } : $content), [$ref]);
     const $hiddenTextarea = require$$0__default["default"].useRef(null);
     require$$0.useEffect(() => {
-        const node = $innerRef.current;
+        const node = $content.current;
         if (!node)
             return;
         const hiddenNode = $hiddenTextarea.current;
@@ -32760,7 +32759,7 @@ const TextareaAutosize = require$$0.forwardRef(({ minRows, maxRows, container = 
         const maxHeight = maxRows * rowHeight;
         const height = maxHeight > node.scrollHeight ? node.scrollHeight : maxHeight;
         node.style.setProperty('height', `${height}px`, 'important');
-    }, [$innerRef, maxRows, props.value]);
+    }, [maxRows, props.value]);
     return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(Input, { ref: typeof $ref === 'function'
                     ? (current) => {
                         $ref(current);

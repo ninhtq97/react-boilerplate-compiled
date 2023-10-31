@@ -1494,345 +1494,6 @@ const InfiniteScroll = ({ className, inverse, isLoading, hasMore, onNext, loader
     return (jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: jsxRuntimeExports.jsxs("div", { className: `infinite-scroll${inverse ? ' inverse' : ''}${className ? ` ${className}` : ''}`, children: [children, hasMore && (jsxRuntimeExports.jsx(Icon, { ref: $ref, className: "infinite-loading", icon: loader || jsxRuntimeExports.jsx(Spinner, { className: "animate-spin" }) }))] }) }));
 };
 
-const Checkbox = forwardRef(({ className, label, disabled, checked: propsIsChecked, onChange: onChangeProps, ...props }, $ref) => {
-    const [isChecked, setIsChecked] = useState(!!propsIsChecked);
-    const isControlled = typeof propsIsChecked === 'boolean';
-    const checked = isControlled ? propsIsChecked : isChecked;
-    const onChange = (e) => {
-        const el = e.currentTarget;
-        if (!isControlled) {
-            setIsChecked(!isChecked);
-        }
-        else {
-            onChangeProps?.(el.checked);
-        }
-    };
-    return (jsxRuntimeExports.jsxs("label", { className: "checkbox", onClick: (e) => e.stopPropagation(), children: [jsxRuntimeExports.jsxs("div", { className: `checkbox__container ${className || ''}`, children: [jsxRuntimeExports.jsx("input", { type: "checkbox", className: "checkbox__ipt", checked: checked, onChange: !disabled ? onChange : undefined, ref: $ref, ...props }), jsxRuntimeExports.jsx("div", { className: `checkbox__box ${checked
-                            ? 'bg-emerald-500 border-emerald-500'
-                            : 'bg-white border-gray-7'}`, children: jsxRuntimeExports.jsx(Icon, { className: `checkbox__icon ${checked ? '' : 'invisible'}`, icon: jsxRuntimeExports.jsx(Check, {}) }) })] }), label && jsxRuntimeExports.jsx("div", { className: "checkbox__label", children: label })] }));
-});
-
-const useApi = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const onCallWithCatchError = useCallback(async (callFn) => {
-        try {
-            setIsLoading(true);
-            return await callFn();
-        }
-        catch (error) {
-            throw error;
-        }
-        finally {
-            setIsLoading(false);
-        }
-    }, []);
-    return { isLoading, onCallWithCatchError };
-};
-
-const useDebounce = (value, delay = 500) => {
-    const [debouncedValue, setDebouncedValue] = useState(value);
-    useEffect(() => {
-        const timeout = setTimeout(() => setDebouncedValue(value), delay);
-        return () => clearTimeout(timeout);
-    }, [value, delay]);
-    return debouncedValue;
-};
-
-const useExport = (COLUMNS, excelData) => {
-    const HEADING = COLUMNS.filter((x) => x.label).reduce((prev, curr) => ({ ...prev, [curr.id]: curr.label }), {});
-    const wsCols = useMemo(() => Object.keys(HEADING).map((key) => {
-        const maxLength = Math.max(...excelData.map((e) => (e[key] || []).length));
-        return {
-            wch: maxLength > HEADING[key].length
-                ? maxLength + 3
-                : HEADING[key].length,
-        };
-    }), [HEADING, excelData]);
-    return { HEADING, excelData, wsCols };
-};
-
-const PAGE = { NUMBER: 1, SIZE: 10 };
-
-const INIT_META = {
-    page: PAGE.NUMBER,
-    take: PAGE.SIZE,
-    total: 0,
-    totalPage: 0,
-    hasPreviousPage: false,
-    hasNextPage: false,
-};
-const INIT_FILTER = {
-    page: PAGE.NUMBER,
-    take: PAGE.SIZE,
-    keyword: '',
-};
-
-const defaults = {
-    headers: () => ({
-        'Content-Type': 'application/json',
-    }),
-    error: {
-        code: 'INTERNAL_SERVER_ERROR',
-        message: 'Something went wrong. Please check your internet connection or contact our support.',
-        status: HttpStatusCode.ServiceUnavailable,
-        data: {},
-    },
-};
-const createAxiosApi = (method, url, variables, config) => new Promise((resolve, reject) => {
-    const axiosConfig = {
-        url,
-        method,
-        headers: defaults.headers(),
-        params: method === 'GET' ? variables : undefined,
-        data: method !== 'GET' ? variables : undefined,
-        ...config,
-    };
-    axios(axiosConfig).then((response) => resolve(response.data), (error) => {
-        reject(error.response ? error.response.data : defaults.error);
-    });
-});
-const api = {
-    get: (...args) => createAxiosApi('GET', ...args),
-    post: (...args) => createAxiosApi('POST', ...args),
-    put: (...args) => createAxiosApi('PUT', ...args),
-    patch: (...args) => createAxiosApi('PATCH', ...args),
-    delete: (...args) => createAxiosApi('DELETE', ...args),
-};
-
-const unique = (arr) => [...new Set(arr)];
-
-const formatDate = (date, formatStr = DATE_FORMAT.DATE) => (date ? format(new Date(date), formatStr) : date);
-
-const isErrorWithMessage = (error) => {
-    return (typeof error === 'object' &&
-        error !== null &&
-        'message' in error &&
-        typeof error.message === 'string');
-};
-const toErrorWithMessage = (error) => {
-    if (isErrorWithMessage(error))
-        return error;
-    try {
-        return new Error(JSON.stringify(error));
-    }
-    catch {
-        return new Error(String(error));
-    }
-};
-const getErrorMessage = (error) => {
-    return toErrorWithMessage(error).message;
-};
-
-const getStored = (key) => localStorage.getItem(key);
-const setStore = (key, data) => {
-    return localStorage.setItem(key, data);
-};
-const removeStored = (key) => localStorage.removeItem(key);
-
-const capitalize = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-};
-const toFixedNumber = (num, decimals = 2) => {
-    return parseFloat(num.toFixed(decimals));
-};
-const toSlug = (str, options) => {
-    return slugify(str, {
-        replacement: '-',
-        remove: /[*+~.()'"!:@]/g,
-        lower: true,
-        strict: false,
-        locale: 'vi',
-        trim: true,
-        ...options,
-    });
-};
-const toIntlNumber = (amount, locales = 'de-DE') => (+amount ? new Intl.NumberFormat(locales).format(+amount) : amount);
-const toCurrency = (amount, currency = 'đ') => `${toIntlNumber(amount)}${currency}`;
-
-const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-const excludeEmptyValue = (obj) => {
-    Object.keys(obj).forEach((k) => !obj[k] && delete obj[k]);
-    return obj;
-};
-const recursiveRoutes = (routes, parentPath = '/') => {
-    for (let key in routes) {
-        if (typeof routes[key] === 'object') {
-            recursiveRoutes(routes[key], parentPath + routes[key].SELF + '/');
-        }
-        else {
-            if (key !== 'SELF') {
-                routes[key] = parentPath + routes[key];
-            }
-            else {
-                routes[key] = parentPath.slice(0, parentPath.length - 1);
-            }
-        }
-    }
-    return routes;
-};
-
-const useFilter = (state) => {
-    const [filter, setFilter] = useState(excludeEmptyValue({ ...INIT_FILTER, ...state }));
-    const onChangeFilter = useCallback((data) => {
-        setFilter((prev) => excludeEmptyValue({ ...prev, ...data }));
-    }, []);
-    return { filter, onChangeFilter };
-};
-
-const useMeta = () => {
-    const [meta, setMeta] = useState(INIT_META);
-    return { meta, setMeta };
-};
-
-const useOutsideClick = ($refs, isListening, onOutsideClick, $listeningElementRef) => {
-    const $mouseDownTargetRef = useRef(null);
-    useEffect(() => {
-        const onMouseDown = (e) => {
-            $mouseDownTargetRef.current = e.target;
-        };
-        const onMouseUp = (e) => {
-            const isAnyIgnoredElementAncestorOfTarget = $refs.some(($ref) => {
-                return ($ref.current &&
-                    ($ref.current.contains($mouseDownTargetRef.current) ||
-                        $ref.current.contains(e.target)));
-            });
-            if (e.button === 0 && !isAnyIgnoredElementAncestorOfTarget) {
-                onOutsideClick();
-            }
-        };
-        const $listeningElement = ($listeningElementRef || {}).current || document;
-        if (isListening) {
-            $listeningElement.addEventListener('mousedown', onMouseDown);
-            $listeningElement.addEventListener('mouseup', onMouseUp);
-        }
-        return () => {
-            $listeningElement.removeEventListener('mousedown', onMouseDown);
-            $listeningElement.removeEventListener('mouseup', onMouseUp);
-        };
-    }, [$refs, isListening, onOutsideClick, $listeningElementRef]);
-};
-
-const usePrevious = (value) => {
-    const ref = useRef();
-    useEffect(() => {
-        ref.current = value;
-    });
-    return ref.current;
-};
-
-const useToast = () => {
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer);
-            toast.addEventListener('mouseleave', Swal.resumeTimer);
-        },
-    });
-    const onFire = useCallback(async (variant = 'info', title) => {
-        Toast.fire({ icon: variant, title: title });
-    }, [Toast]);
-    return { onFire };
-};
-
-const InputFile = forwardRef(({ className, label, placeholder, disabled, error, helperText, value, merchantId, onChange: onChangeProps, }, $ref) => {
-    const { onCallWithCatchError } = useApi();
-    const [base64, setBase64] = useState('');
-    const fetchStream = useCallback(async () => {
-    }, [merchantId, value]);
-    useEffect(() => {
-        fetchStream();
-    }, [fetchStream]);
-    const onChange = async (e) => {
-        e.currentTarget.files?.[0];
-        if (value && merchantId) {
-            onCallWithCatchError(async () => {
-                // await deleteUpload(merchantId, value);
-            });
-        }
-    };
-    return (jsxRuntimeExports.jsxs("div", { className: `form-file${disabled ? ' disabled' : ''}`, children: [label && jsxRuntimeExports.jsx("span", { className: "label-file", children: label }), jsxRuntimeExports.jsxs("label", { className: `file-container ${className || ''} ${error ? '!border-rose-500 text-rose-500' : 'text-stone-800'}`, children: [!disabled && (jsxRuntimeExports.jsxs("div", { className: `file-field`, children: [jsxRuntimeExports.jsx(Icon, { className: `items-center justify-center border rounded bg-opacity-10 p-1 max-w-[32px] max-h-8 ${error
-                                    ? 'border-rose-500 bg-rose-500 text-rose-500'
-                                    : 'border-emerald-500 bg-emerald-500 text-emerald-500'}`, icon: jsxRuntimeExports.jsx(Plus, {}) }), jsxRuntimeExports.jsx("input", { type: "file", className: "ipt-file", ref: $ref, onChange: onChange }), placeholder && (jsxRuntimeExports.jsx("span", { className: "placeholder-file", children: placeholder }))] })), base64 && (jsxRuntimeExports.jsx("div", { className: "file-preview", children: jsxRuntimeExports.jsx("img", { className: "preview-img", src: base64, alt: "" }) }))] }), error && jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-500 ml-2", children: helperText })] }));
-});
-
-const Range = ({ defaultValue, onChange: onChangeProps, min = 0, max = 100, format = 'value', withRangeText = false, ...props }) => {
-    const [stateValue, setStateValue] = useState(defaultValue || 0);
-    const isControlled = Boolean(defaultValue?.toString() && !!onChangeProps);
-    const value = isControlled ? defaultValue : stateValue;
-    const $range = useRef(null);
-    const $bubble = useRef(null);
-    const onChange = (e) => {
-        if (!isControlled) {
-            setStateValue(e.currentTarget.value);
-        }
-        else {
-            onChangeProps?.(e);
-        }
-    };
-    const onInput = () => {
-        setBubblePosition();
-        setTrackProcess();
-    };
-    const setTrackProcess = () => {
-        const css = calcTrack($range.current);
-        $range.current.style.background = css;
-    };
-    const setBubblePosition = () => {
-        const css = calcPosition$2($range.current);
-        $bubble.current.style.left = css;
-    };
-    useEffect(() => {
-        setTrackProcess();
-        setBubblePosition();
-    }, [value]);
-    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsxs("div", { className: "range", children: [jsxRuntimeExports.jsx("input", { type: "range", className: "ipt", value: value, onChange: onChange, onInput: onInput, min: min, max: max, ref: $range, style: { backgroundColor: '#1E2540' }, ...props }), jsxRuntimeExports.jsx("div", { className: "range__bubble", ref: $bubble, children: format === 'value'
-                            ? value
-                            : `${parseFloat(Number(value).toFixed(1))}%` })] }), withRangeText && (jsxRuntimeExports.jsxs("div", { className: "flex justify-between gap-2 text-base text-white mt-3", children: [jsxRuntimeExports.jsx("p", { children: min }), jsxRuntimeExports.jsx("p", { children: max })] }))] }));
-};
-const calcTrack = ($range) => {
-    const val = +$range.value;
-    const max = +$range.max;
-    return `linear-gradient(to right, #FFFF00 -0.02%, #F88500 ${Number(((val / max) * 100).toString())}%, #36425A ${Number(((val / max) * 100).toString())}%, #36425A 100%)`;
-};
-const calcPosition$2 = ($range) => {
-    const val = +$range.value;
-    const min = $range.min ? +$range.min : 0;
-    const max = $range.max ? +$range.max : 100;
-    const newVal = Number(((val - min) * 100) / (max - min));
-    return `calc(${newVal}% + (${6 - newVal * 0.11}px))`;
-};
-
-const Switch = forwardRef(({ className, checked: propsIsChecked, onChange: onChangeProps, disabled, ...props }, $ref) => {
-    const [isChecked, setIsChecked] = useState(false);
-    const isControlled = typeof propsIsChecked === 'boolean';
-    const checked = isControlled ? propsIsChecked : isChecked;
-    const onChange = (e) => {
-        const el = e.currentTarget;
-        if (!isControlled) {
-            setIsChecked(!isChecked);
-        }
-        else {
-            onChangeProps?.(el.checked);
-        }
-    };
-    return (jsxRuntimeExports.jsx("label", { className: `switch${checked ? ' active' : ''}${disabled ? ' disabled' : ''} ${className || ''}`, onClick: (e) => e.stopPropagation(), children: jsxRuntimeExports.jsxs("div", { className: "switch__container bg", children: [jsxRuntimeExports.jsx("input", { type: "checkbox", className: "switch__ipt", checked: checked, onChange: !disabled ? onChange : undefined, ref: $ref, ...props }), jsxRuntimeExports.jsx("div", { className: "switch__thumb" })] }) }));
-});
-
-const Input = forwardRef(({ className, containerClassName, inputClassName, floating, tag: Wrapper = 'input', label, icon, iconPosition = 'start', prefix, disabled, error, helperText, placeholder, ...props }, $ref) => {
-    return (jsxRuntimeExports.jsxs("div", { className: `form-field ${error ? ' has-error' : ''}${placeholder || prefix || props.value?.toString().length
-            ? ' has-value'
-            : ''}${disabled ? ' disabled' : ''}${!label ? ' no-label' : ''}${floating ? ' floating' : ''}${Wrapper !== 'input' ? ' textarea' : ''}`, children: [!floating && label && (jsxRuntimeExports.jsxs("span", { className: "label-field", children: [label, props.required && jsxRuntimeExports.jsx("span", { className: "text-rose-500", children: "*" })] })), jsxRuntimeExports.jsxs("div", { className: `text-field ${className || ''}`, children: [icon && iconPosition === 'start' && (jsxRuntimeExports.jsx("div", { className: "icon-field", children: icon })), jsxRuntimeExports.jsxs("label", { className: `ipt-field ${containerClassName ? ` ${containerClassName}` : ''}`, children: [prefix && jsxRuntimeExports.jsx("div", { className: "ipt-field__prefix", children: prefix }), disabled ? (jsxRuntimeExports.jsx("p", { className: "ipt", ref: $ref, children: props.value })) : (jsxRuntimeExports.jsx(Wrapper, { type: "text", className: `ipt${inputClassName ? ` ${inputClassName}` : ''}`, ref: $ref, autoComplete: "off", placeholder: placeholder, ...props })), floating && label && (jsxRuntimeExports.jsxs("span", { className: "label-field", children: [label, props.required && jsxRuntimeExports.jsx("span", { className: "text-rose-500", children: "*" })] }))] }), icon && iconPosition === 'end' && (jsxRuntimeExports.jsx("div", { className: "icon-field", children: icon }))] }), error && jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-500 ml-2", children: helperText })] }));
-});
-const InputPassword = forwardRef((props, $ref) => {
-    const [hide, setHide] = useState(true);
-    const onToggleHide = () => setHide(!hide);
-    return (jsxRuntimeExports.jsx(Input, { type: hide ? 'password' : 'text', ...props, ref: $ref, iconPosition: props.iconPosition || 'end', icon: props.icon || hide ? (jsxRuntimeExports.jsx(Eye, { className: "cursor-pointer fill-none", onClick: onToggleHide })) : (jsxRuntimeExports.jsx(EyeOff, { className: "cursor-pointer fill-none", onClick: onToggleHide })) }));
-});
-
 var reactDom = {exports: {}};
 
 var reactDom_production_min = {};
@@ -32734,6 +32395,368 @@ if (process.env.NODE_ENV === 'production') {
 
 var reactDomExports = reactDom.exports;
 
+const Checkbox = forwardRef(({ className, label, disabled, checked: propsIsChecked, onChange: onChangeProps, ...props }, $ref) => {
+    const [isChecked, setIsChecked] = useState(!!propsIsChecked);
+    const isControlled = typeof propsIsChecked === 'boolean';
+    const checked = isControlled ? propsIsChecked : isChecked;
+    const onChange = (e) => {
+        const el = e.currentTarget;
+        if (!isControlled) {
+            setIsChecked(!isChecked);
+        }
+        else {
+            onChangeProps?.(el.checked);
+        }
+    };
+    return (jsxRuntimeExports.jsxs("label", { className: "checkbox", onClick: (e) => e.stopPropagation(), children: [jsxRuntimeExports.jsxs("div", { className: `checkbox__container ${className || ''}`, children: [jsxRuntimeExports.jsx("input", { type: "checkbox", className: "checkbox__ipt", checked: checked, onChange: !disabled ? onChange : undefined, ref: $ref, ...props }), jsxRuntimeExports.jsx("div", { className: `checkbox__box ${checked
+                            ? 'bg-emerald-500 border-emerald-500'
+                            : 'bg-white border-gray-7'}`, children: jsxRuntimeExports.jsx(Icon, { className: `checkbox__icon ${checked ? '' : 'invisible'}`, icon: jsxRuntimeExports.jsx(Check, {}) }) })] }), label && jsxRuntimeExports.jsx("div", { className: "checkbox__label", children: label })] }));
+});
+
+const useApi = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    const onCallWithCatchError = useCallback(async (callFn) => {
+        try {
+            setIsLoading(true);
+            return await callFn();
+        }
+        catch (error) {
+            throw error;
+        }
+        finally {
+            setIsLoading(false);
+        }
+    }, []);
+    return { isLoading, onCallWithCatchError };
+};
+
+const useDebounce = (value, delay = 500) => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+    useEffect(() => {
+        const timeout = setTimeout(() => setDebouncedValue(value), delay);
+        return () => clearTimeout(timeout);
+    }, [value, delay]);
+    return debouncedValue;
+};
+
+const useExport = (COLUMNS, excelData) => {
+    const HEADING = COLUMNS.filter((x) => x.label).reduce((prev, curr) => ({ ...prev, [curr.id]: curr.label }), {});
+    const wsCols = useMemo(() => Object.keys(HEADING).map((key) => {
+        const maxLength = Math.max(...excelData.map((e) => (e[key] || []).length));
+        return {
+            wch: maxLength > HEADING[key].length
+                ? maxLength + 3
+                : HEADING[key].length,
+        };
+    }), [HEADING, excelData]);
+    return { HEADING, excelData, wsCols };
+};
+
+const PAGE = { NUMBER: 1, SIZE: 10 };
+
+const INIT_META = {
+    page: PAGE.NUMBER,
+    take: PAGE.SIZE,
+    total: 0,
+    totalPage: 0,
+    hasPreviousPage: false,
+    hasNextPage: false,
+};
+const INIT_FILTER = {
+    page: PAGE.NUMBER,
+    take: PAGE.SIZE,
+    keyword: '',
+};
+
+const defaults = {
+    headers: () => ({
+        'Content-Type': 'application/json',
+    }),
+    error: {
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'Something went wrong. Please check your internet connection or contact our support.',
+        status: HttpStatusCode.ServiceUnavailable,
+        data: {},
+    },
+};
+const createAxiosApi = (method, url, variables, config) => new Promise((resolve, reject) => {
+    const axiosConfig = {
+        url,
+        method,
+        headers: defaults.headers(),
+        params: method === 'GET' ? variables : undefined,
+        data: method !== 'GET' ? variables : undefined,
+        ...config,
+    };
+    axios(axiosConfig).then((response) => resolve(response.data), (error) => {
+        reject(error.response ? error.response.data : defaults.error);
+    });
+});
+const api = {
+    get: (...args) => createAxiosApi('GET', ...args),
+    post: (...args) => createAxiosApi('POST', ...args),
+    put: (...args) => createAxiosApi('PUT', ...args),
+    patch: (...args) => createAxiosApi('PATCH', ...args),
+    delete: (...args) => createAxiosApi('DELETE', ...args),
+};
+
+const unique = (arr) => [...new Set(arr)];
+
+const formatDate = (date, formatStr = DATE_FORMAT.DATE) => (date ? format(new Date(date), formatStr) : date);
+
+const isErrorWithMessage = (error) => {
+    return (typeof error === 'object' &&
+        error !== null &&
+        'message' in error &&
+        typeof error.message === 'string');
+};
+const toErrorWithMessage = (error) => {
+    if (isErrorWithMessage(error))
+        return error;
+    try {
+        return new Error(JSON.stringify(error));
+    }
+    catch {
+        return new Error(String(error));
+    }
+};
+const getErrorMessage = (error) => {
+    return toErrorWithMessage(error).message;
+};
+
+const getStored = (key) => localStorage.getItem(key);
+const setStore = (key, data) => {
+    return localStorage.setItem(key, data);
+};
+const removeStored = (key) => localStorage.removeItem(key);
+
+const capitalize = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+};
+const toFixedNumber = (num, decimals = 2) => {
+    return parseFloat(num.toFixed(decimals));
+};
+const toSlug = (str, options) => {
+    return slugify(str, {
+        replacement: '-',
+        remove: /[*+~.()'"!:@]/g,
+        lower: true,
+        strict: false,
+        locale: 'vi',
+        trim: true,
+        ...options,
+    });
+};
+const toIntlNumber = (amount, locales = 'de-DE') => (+amount ? new Intl.NumberFormat(locales).format(+amount) : amount);
+const toCurrency = (amount, currency = 'đ') => `${toIntlNumber(amount)}${currency}`;
+
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+const excludeEmptyValue = (obj) => {
+    Object.keys(obj).forEach((k) => !obj[k] && delete obj[k]);
+    return obj;
+};
+const recursiveRoutes = (routes, parentPath = '/') => {
+    for (let key in routes) {
+        if (typeof routes[key] === 'object') {
+            recursiveRoutes(routes[key], parentPath + routes[key].SELF + '/');
+        }
+        else {
+            if (key !== 'SELF') {
+                routes[key] = parentPath + routes[key];
+            }
+            else {
+                routes[key] = parentPath.slice(0, parentPath.length - 1);
+            }
+        }
+    }
+    return routes;
+};
+
+const useFilter = (state) => {
+    const [filter, setFilter] = useState(excludeEmptyValue({ ...INIT_FILTER, ...state }));
+    const onChangeFilter = useCallback((data) => {
+        setFilter((prev) => excludeEmptyValue({ ...prev, ...data }));
+    }, []);
+    return { filter, onChangeFilter };
+};
+
+const useMeta = () => {
+    const [meta, setMeta] = useState(INIT_META);
+    return { meta, setMeta };
+};
+
+const useOutsideClick = ($refs, isListening, onOutsideClick, $listeningElementRef) => {
+    const $mouseDownTargetRef = useRef(null);
+    useEffect(() => {
+        const onMouseDown = (e) => {
+            $mouseDownTargetRef.current = e.target;
+        };
+        const onMouseUp = (e) => {
+            const isAnyIgnoredElementAncestorOfTarget = $refs.some(($ref) => {
+                return ($ref.current &&
+                    ($ref.current.contains($mouseDownTargetRef.current) ||
+                        $ref.current.contains(e.target)));
+            });
+            if (e.button === 0 && !isAnyIgnoredElementAncestorOfTarget) {
+                onOutsideClick();
+            }
+        };
+        const $listeningElement = ($listeningElementRef || {}).current || document;
+        if (isListening) {
+            $listeningElement.addEventListener('mousedown', onMouseDown);
+            $listeningElement.addEventListener('mouseup', onMouseUp);
+        }
+        return () => {
+            $listeningElement.removeEventListener('mousedown', onMouseDown);
+            $listeningElement.removeEventListener('mouseup', onMouseUp);
+        };
+    }, [$refs, isListening, onOutsideClick, $listeningElementRef]);
+};
+
+const usePrevious = (value) => {
+    const ref = useRef();
+    useEffect(() => {
+        ref.current = value;
+    });
+    return ref.current;
+};
+
+const useToast = () => {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+        },
+    });
+    const onFire = useCallback(async (variant = 'info', title) => {
+        Toast.fire({ icon: variant, title: title });
+    }, [Toast]);
+    return { onFire };
+};
+
+const InputFile = forwardRef(({ className, label, placeholder, disabled, error, helperText, value, merchantId, onChange: onChangeProps, }, $ref) => {
+    const { onCallWithCatchError } = useApi();
+    const [base64, setBase64] = useState('');
+    const fetchStream = useCallback(async () => {
+    }, [merchantId, value]);
+    useEffect(() => {
+        fetchStream();
+    }, [fetchStream]);
+    const onChange = async (e) => {
+        e.currentTarget.files?.[0];
+        if (value && merchantId) {
+            onCallWithCatchError(async () => {
+                // await deleteUpload(merchantId, value);
+            });
+        }
+    };
+    return (jsxRuntimeExports.jsxs("div", { className: `form-file${disabled ? ' disabled' : ''}`, children: [label && jsxRuntimeExports.jsx("span", { className: "label-file", children: label }), jsxRuntimeExports.jsxs("label", { className: `file-container ${className || ''} ${error ? '!border-rose-500 text-rose-500' : 'text-stone-800'}`, children: [!disabled && (jsxRuntimeExports.jsxs("div", { className: `file-field`, children: [jsxRuntimeExports.jsx(Icon, { className: `items-center justify-center border rounded bg-opacity-10 p-1 max-w-[32px] max-h-8 ${error
+                                    ? 'border-rose-500 bg-rose-500 text-rose-500'
+                                    : 'border-emerald-500 bg-emerald-500 text-emerald-500'}`, icon: jsxRuntimeExports.jsx(Plus, {}) }), jsxRuntimeExports.jsx("input", { type: "file", className: "ipt-file", ref: $ref, onChange: onChange }), placeholder && (jsxRuntimeExports.jsx("span", { className: "placeholder-file", children: placeholder }))] })), base64 && (jsxRuntimeExports.jsx("div", { className: "file-preview", children: jsxRuntimeExports.jsx("img", { className: "preview-img", src: base64, alt: "" }) }))] }), error && jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-500 ml-2", children: helperText })] }));
+});
+
+const Range = ({ defaultValue, onChange: onChangeProps, min = 0, max = 100, format = 'value', withRangeText = false, ...props }) => {
+    const [stateValue, setStateValue] = useState(defaultValue || 0);
+    const isControlled = Boolean(defaultValue?.toString() && !!onChangeProps);
+    const value = isControlled ? defaultValue : stateValue;
+    const $range = useRef(null);
+    const $bubble = useRef(null);
+    const onChange = (e) => {
+        if (!isControlled) {
+            setStateValue(e.currentTarget.value);
+        }
+        else {
+            onChangeProps?.(e);
+        }
+    };
+    const onInput = () => {
+        setBubblePosition();
+        setTrackProcess();
+    };
+    const setTrackProcess = () => {
+        const css = calcTrack($range.current);
+        $range.current.style.background = css;
+    };
+    const setBubblePosition = () => {
+        const css = calcPosition$2($range.current);
+        $bubble.current.style.left = css;
+    };
+    useEffect(() => {
+        setTrackProcess();
+        setBubblePosition();
+    }, [value]);
+    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsxs("div", { className: "range", children: [jsxRuntimeExports.jsx("input", { type: "range", className: "ipt", value: value, onChange: onChange, onInput: onInput, min: min, max: max, ref: $range, style: { backgroundColor: '#1E2540' }, ...props }), jsxRuntimeExports.jsx("div", { className: "range__bubble", ref: $bubble, children: format === 'value'
+                            ? value
+                            : `${parseFloat(Number(value).toFixed(1))}%` })] }), withRangeText && (jsxRuntimeExports.jsxs("div", { className: "flex justify-between gap-2 text-base text-white mt-3", children: [jsxRuntimeExports.jsx("p", { children: min }), jsxRuntimeExports.jsx("p", { children: max })] }))] }));
+};
+const calcTrack = ($range) => {
+    const val = +$range.value;
+    const max = +$range.max;
+    return `linear-gradient(to right, #FFFF00 -0.02%, #F88500 ${Number(((val / max) * 100).toString())}%, #36425A ${Number(((val / max) * 100).toString())}%, #36425A 100%)`;
+};
+const calcPosition$2 = ($range) => {
+    const val = +$range.value;
+    const min = $range.min ? +$range.min : 0;
+    const max = $range.max ? +$range.max : 100;
+    const newVal = Number(((val - min) * 100) / (max - min));
+    return `calc(${newVal}% + (${6 - newVal * 0.11}px))`;
+};
+
+const Switch = forwardRef(({ className, checked: propsIsChecked, onChange: onChangeProps, disabled, ...props }, $ref) => {
+    const [isChecked, setIsChecked] = useState(false);
+    const isControlled = typeof propsIsChecked === 'boolean';
+    const checked = isControlled ? propsIsChecked : isChecked;
+    const onChange = (e) => {
+        const el = e.currentTarget;
+        if (!isControlled) {
+            setIsChecked(!isChecked);
+        }
+        else {
+            onChangeProps?.(el.checked);
+        }
+    };
+    return (jsxRuntimeExports.jsx("label", { className: `switch${checked ? ' active' : ''}${disabled ? ' disabled' : ''} ${className || ''}`, onClick: (e) => e.stopPropagation(), children: jsxRuntimeExports.jsxs("div", { className: "switch__container bg", children: [jsxRuntimeExports.jsx("input", { type: "checkbox", className: "switch__ipt", checked: checked, onChange: !disabled ? onChange : undefined, ref: $ref, ...props }), jsxRuntimeExports.jsx("div", { className: "switch__thumb" })] }) }));
+});
+
+const Input = forwardRef(({ className, containerClassName, inputClassName, floating, tag: Wrapper = 'input', label, icon, iconPosition = 'start', prefix, disabled, error, helperText, placeholder, ...props }, $ref) => {
+    return (jsxRuntimeExports.jsxs("div", { className: `form-field ${error ? ' has-error' : ''}${placeholder || prefix || props.value?.toString().length
+            ? ' has-value'
+            : ''}${disabled ? ' disabled' : ''}${!label ? ' no-label' : ''}${floating ? ' floating' : ''}${Wrapper !== 'input' ? ' textarea' : ''}`, children: [!floating && label && (jsxRuntimeExports.jsxs("span", { className: "label-field", children: [label, props.required && jsxRuntimeExports.jsx("span", { className: "text-rose-500", children: "*" })] })), jsxRuntimeExports.jsxs("div", { className: `text-field ${className || ''}`, children: [icon && iconPosition === 'start' && (jsxRuntimeExports.jsx("div", { className: "icon-field", children: icon })), jsxRuntimeExports.jsxs("label", { className: `ipt-field ${containerClassName ? ` ${containerClassName}` : ''}`, children: [prefix && jsxRuntimeExports.jsx("div", { className: "ipt-field__prefix", children: prefix }), disabled ? (jsxRuntimeExports.jsx("p", { className: "ipt", ref: $ref, children: props.value })) : (jsxRuntimeExports.jsx(Wrapper, { type: "text", className: `ipt${inputClassName ? ` ${inputClassName}` : ''}`, ref: $ref, autoComplete: "off", placeholder: placeholder, ...props })), floating && label && (jsxRuntimeExports.jsxs("span", { className: "label-field", children: [label, props.required && jsxRuntimeExports.jsx("span", { className: "text-rose-500", children: "*" })] }))] }), icon && iconPosition === 'end' && (jsxRuntimeExports.jsx("div", { className: "icon-field", children: icon }))] }), error && jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-500 ml-2", children: helperText })] }));
+});
+const InputPassword = forwardRef((props, $ref) => {
+    const [hide, setHide] = useState(true);
+    const onToggleHide = () => setHide(!hide);
+    return (jsxRuntimeExports.jsx(Input, { type: hide ? 'password' : 'text', ...props, ref: $ref, iconPosition: props.iconPosition || 'end', icon: props.icon || hide ? (jsxRuntimeExports.jsx(Eye, { className: "cursor-pointer fill-none", onClick: onToggleHide })) : (jsxRuntimeExports.jsx(EyeOff, { className: "cursor-pointer fill-none", onClick: onToggleHide })) }));
+});
+const TextareaAutosize = forwardRef(({ minRows, maxRows, container = 'body', ...props }, $ref) => {
+    const $content = useRef(null);
+    const $innerRef = useMemo(() => (typeof $ref === 'function' ? { current: null } : $content), [$ref]);
+    const $hiddenTextarea = require$$0.useRef(null);
+    useEffect(() => {
+        const node = $innerRef.current;
+        if (!node)
+            return;
+        const hiddenNode = $hiddenTextarea.current;
+        if (!hiddenNode)
+            return;
+        const rowHeight = hiddenNode.scrollHeight;
+        const maxHeight = maxRows * rowHeight;
+        const height = maxHeight > node.scrollHeight ? node.scrollHeight : maxHeight;
+        node.style.setProperty('height', `${height}px`, 'important');
+    }, [$innerRef, maxRows, props.value]);
+    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(Input, { ref: typeof $ref === 'function'
+                    ? (current) => {
+                        $ref(current);
+                        $content.current = current;
+                    }
+                    : ($ref || $content), tag: 'textarea', rows: minRows, ...props }), reactDomExports.createPortal(jsxRuntimeExports.jsx("textarea", { className: "!absolute !top-0 !right-0 !min-h-0 !max-h-none !h-0 !invisible !overflow-hidden !-z-[1000]", ref: $hiddenTextarea }), document.querySelector(container))] }));
+});
+
 const Modal = ({ className, container = 'body', width = 650, withCloseIcon = true, disableClickBackdrop = false, isOpen: propsIsOpen, onClose: tellParentToClose, renderLink, renderHeader, renderContent, renderFooter, }) => {
     const [stateIsOpen, setStateOpen] = useState(false);
     const isControlled = typeof propsIsOpen === 'boolean';
@@ -33054,5 +33077,5 @@ const calcPosition = (position, $tooltipRef, $linkRef) => {
     return { top: 0, left: 0 };
 };
 
-export { Alert, ArrowLeft, ArrowRight, Button, Check, Checkbox, ChevronDown, DATE_FORMAT, CustomDatePicker as DatePicker, Eye, EyeOff, InputFile as File, INIT_FILTER, INIT_META, Icon, InfiniteScroll, Input, InputPassword, Modal, PAGE, Pagination, Plus, Popover, Range, Search, Select, Spinner, Switch, Table, Tabs, Times, Tooltip, api, capitalize, delay, excludeEmptyValue, formatDate, getErrorMessage, getStored, isErrorWithMessage, recursiveRoutes, removeStored, setStore, toCurrency, toErrorWithMessage, toFixedNumber, toIntlNumber, toSlug, unique, useApi, useDebounce, useExport, useFilter, useMeta, useOutsideClick, usePrevious, useToast };
+export { Alert, ArrowLeft, ArrowRight, Button, Check, Checkbox, ChevronDown, DATE_FORMAT, CustomDatePicker as DatePicker, Eye, EyeOff, InputFile as File, INIT_FILTER, INIT_META, Icon, InfiniteScroll, Input, InputPassword, Modal, PAGE, Pagination, Plus, Popover, Range, Search, Select, Spinner, Switch, Table, Tabs, TextareaAutosize, Times, Tooltip, api, capitalize, delay, excludeEmptyValue, formatDate, getErrorMessage, getStored, isErrorWithMessage, recursiveRoutes, removeStored, setStore, toCurrency, toErrorWithMessage, toFixedNumber, toIntlNumber, toSlug, unique, useApi, useDebounce, useExport, useFilter, useMeta, useOutsideClick, usePrevious, useToast };
 //# sourceMappingURL=index.esm.js.map

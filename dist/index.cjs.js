@@ -32745,7 +32745,7 @@ const InputPassword = require$$0.forwardRef((props, $ref) => {
     const onToggleHide = () => setHide(!hide);
     return (jsxRuntimeExports.jsx(Input, { type: hide ? 'password' : 'text', ...props, ref: $ref, iconPosition: props.iconPosition || 'end', icon: props.icon || hide ? (jsxRuntimeExports.jsx(Eye, { className: "cursor-pointer fill-none", onClick: onToggleHide })) : (jsxRuntimeExports.jsx(EyeOff, { className: "cursor-pointer fill-none", onClick: onToggleHide })) }));
 });
-const TextareaAutosize = require$$0.forwardRef(function Render({ minRows, maxRows, container = 'body', ...props }, $ref) {
+const TextareaAutosize = require$$0.forwardRef(function Render({ minRows = 1, maxRows = Infinity, container = 'body', ...props }, $ref) {
     const $content = require$$0.useRef(null);
     const $hiddenTextarea = require$$0.useRef(null);
     const $heightRef = require$$0.useRef(0);
@@ -32773,7 +32773,7 @@ const TextareaAutosize = require$$0.forwardRef(function Render({ minRows, maxRow
                         $ref(current);
                         $content.current = current;
                     }
-                    : ($ref || $content), tag: 'textarea', rows: minRows, ...props }), reactDomExports.createPortal(jsxRuntimeExports.jsx("textarea", { className: "!absolute !top-0 !right-0 !min-h-0 !max-h-none !h-0 !invisible !overflow-hidden !-z-[1000]", ref: $hiddenTextarea, defaultValue: props.value || props.placeholder || 'x' }), document.querySelector(container))] }));
+                    : ($ref || $content), tag: 'textarea', rows: minRows, ...props }), reactDomExports.createPortal(jsxRuntimeExports.jsx("textarea", { className: "!absolute !top-0 !right-0 !min-h-0 !max-h-none !h-0 !leading-snug !invisible !overflow-hidden !-z-[1000]", ref: $hiddenTextarea, defaultValue: props.value || props.placeholder || 'x' }), document.querySelector(container))] }));
 });
 
 const Modal = ({ className, container = 'body', width = 650, withCloseIcon = true, disableClickBackdrop = false, isOpen: propsIsOpen, onClose: tellParentToClose, renderLink, renderHeader, renderContent, renderFooter, }) => {

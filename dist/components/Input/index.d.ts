@@ -15,8 +15,8 @@ export declare const Input: React.ForwardRefExoticComponent<Omit<Props, "ref"> &
 export declare const InputPassword: React.ForwardRefExoticComponent<Omit<Omit<Props, "ref"> & React.RefAttributes<HTMLInputElement>, "ref"> & React.RefAttributes<HTMLInputElement>>;
 type TextareaAutosizeProps = {
     container?: string;
-    minRows: number;
-    maxRows: number;
+    minRows?: number;
+    maxRows?: number;
 } & Omit<React.ComponentProps<typeof Input>, 'tag'>;
 export declare const TextareaAutosize: React.ForwardRefExoticComponent<Omit<TextareaAutosizeProps, "ref"> & React.RefAttributes<HTMLTextAreaElement>>;
 export { default as Checkbox } from './Checkbox';

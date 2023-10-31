@@ -13,6 +13,12 @@ type Props = {
 } & React.HTMLProps<HTMLInputElement>;
 export declare const Input: React.ForwardRefExoticComponent<Omit<Props, "ref"> & React.RefAttributes<HTMLInputElement>>;
 export declare const InputPassword: React.ForwardRefExoticComponent<Omit<Omit<Props, "ref"> & React.RefAttributes<HTMLInputElement>, "ref"> & React.RefAttributes<HTMLInputElement>>;
+type TextareaAutosizeProps = {
+    container?: string;
+    minRows: number;
+    maxRows: number;
+} & Omit<React.ComponentProps<typeof Input>, 'tag'>;
+export declare const TextareaAutosize: React.ForwardRefExoticComponent<Omit<TextareaAutosizeProps, "ref"> & React.RefAttributes<HTMLTextAreaElement>>;
 export { default as Checkbox } from './Checkbox';
 export { default as File } from './File';
 export { default as Range } from './Range';

@@ -32734,13 +32734,9 @@ const InputPassword = forwardRef((props, $ref) => {
     return (jsxRuntimeExports.jsx(Input, { type: hide ? 'password' : 'text', ...props, ref: $ref, iconPosition: props.iconPosition || 'end', icon: props.icon || hide ? (jsxRuntimeExports.jsx(Eye, { className: "cursor-pointer fill-none", onClick: onToggleHide })) : (jsxRuntimeExports.jsx(EyeOff, { className: "cursor-pointer fill-none", onClick: onToggleHide })) }));
 });
 const TextareaAutosize = forwardRef(({ minRows, maxRows, container = 'body', ...props }, $ref) => {
-    const [isClient, setIsClient] = useState(false);
     const $content = useRef(null);
     const $innerRef = useMemo(() => (typeof $ref === 'function' ? { current: null } : $content), [$ref]);
     const $hiddenTextarea = require$$0.useRef(null);
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
     useEffect(() => {
         const node = $innerRef.current;
         if (!node)
@@ -32758,8 +32754,7 @@ const TextareaAutosize = forwardRef(({ minRows, maxRows, container = 'body', ...
                         $ref(current);
                         $content.current = current;
                     }
-                    : ($ref || $content), tag: 'textarea', rows: minRows, ...props }), isClient &&
-                reactDomExports.createPortal(jsxRuntimeExports.jsx("textarea", { className: "!absolute !top-0 !right-0 !min-h-0 !max-h-none !h-0 !invisible !overflow-hidden !-z-[1000]", ref: $hiddenTextarea }), document.querySelector(container))] }));
+                    : ($ref || $content), tag: 'textarea', rows: minRows, ...props }), reactDomExports.createPortal(jsxRuntimeExports.jsx("textarea", { className: "!absolute !top-0 !right-0 !min-h-0 !max-h-none !h-0 !invisible !overflow-hidden !-z-[1000]", ref: $hiddenTextarea }), document.querySelector(container))] }));
 });
 
 const Modal = ({ className, container = 'body', width = 650, withCloseIcon = true, disableClickBackdrop = false, isOpen: propsIsOpen, onClose: tellParentToClose, renderLink, renderHeader, renderContent, renderFooter, }) => {

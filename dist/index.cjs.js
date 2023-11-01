@@ -32749,6 +32749,20 @@ const TextareaAutosize = require$$0.forwardRef(function Render({ minRows = 1, ma
     const $content = require$$0.useRef(null);
     const $hiddenTextarea = require$$0.useRef(null);
     const $heightRef = require$$0.useRef(0);
+    const getSizing = (node) => {
+        const style = window.getComputedStyle(node);
+        if (!style)
+            return;
+        const widthSize = parseFloat(style.width) +
+            parseFloat(style.borderRightWidth) +
+            parseFloat(style.borderLeftWidth) +
+            parseFloat(style.paddingRight) +
+            parseFloat(style.paddingLeft) +
+            'px';
+        const paddingSize = parseFloat(style.paddingBottom) + parseFloat(style.paddingTop);
+        const borderSize = parseFloat(style.borderBottomWidth) + parseFloat(style.borderTopWidth);
+        return { style, widthSize, paddingSize, borderSize };
+    };
     require$$0.useEffect(() => {
         const node = $content.current;
         if (!node)
@@ -32756,12 +32770,18 @@ const TextareaAutosize = require$$0.forwardRef(function Render({ minRows = 1, ma
         const hiddenNode = $hiddenTextarea.current;
         if (!hiddenNode)
             return;
-        const rows = 1 + (node.value.match(/\n/g) || []).length;
-        const rowHeight = hiddenNode.scrollHeight;
-        const realHeight = rows * rowHeight;
-        const minHeight = minRows * rowHeight;
-        let height = Math.max(minHeight, realHeight);
-        const maxHeight = maxRows * rowHeight;
+        const nodeSizing = getSizing(node);
+        if (!nodeSizing)
+            return;
+        const { widthSize, paddingSize, borderSize } = nodeSizing;
+        hiddenNode.style.setProperty('width', widthSize, 'important');
+        hiddenNode.value = node.value || node.placeholder || 'x';
+        let height = hiddenNode.scrollHeight;
+        hiddenNode.value = 'x';
+        const rowHeight = hiddenNode.scrollHeight - paddingSize;
+        const minHeight = minRows * rowHeight + paddingSize + borderSize;
+        height = Math.max(minHeight, height);
+        const maxHeight = maxRows * rowHeight + paddingSize + borderSize;
         height = Math.min(maxHeight, height);
         if ($heightRef.current !== height) {
             $heightRef.current = height;
@@ -32773,7 +32793,7 @@ const TextareaAutosize = require$$0.forwardRef(function Render({ minRows = 1, ma
                         $ref(current);
                         $content.current = current;
                     }
-                    : ($ref || $content), tag: 'textarea', rows: minRows, ...props }), reactDomExports.createPortal(jsxRuntimeExports.jsx("textarea", { className: "!absolute !top-0 !right-0 !min-h-0 !max-h-none !h-0 !leading-snug !invisible !overflow-hidden !-z-[1000]", ref: $hiddenTextarea, defaultValue: props.value || props.placeholder || 'x' }), document.querySelector(container))] }));
+                    : ($ref || $content), tag: 'textarea', rows: minRows, ...props }), reactDomExports.createPortal(jsxRuntimeExports.jsx("textarea", { className: "!absolute !top-0 !right-0 !min-h-0 !max-h-none !h-0 !leading-snug !invisible !overflow-hidden !pointer-events-none !-z-[1000]", ref: $hiddenTextarea, defaultValue: props.value || props.placeholder || 'x' }), document.querySelector(container))] }));
 });
 
 const Modal = ({ className, container = 'body', width = 650, withCloseIcon = true, disableClickBackdrop = false, isOpen: propsIsOpen, onClose: tellParentToClose, renderLink, renderHeader, renderContent, renderFooter, }) => {

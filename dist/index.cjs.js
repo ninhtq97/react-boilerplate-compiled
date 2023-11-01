@@ -32774,10 +32774,11 @@ const TextareaAutosize = require$$0.forwardRef(function Render({ minRows = 1, ma
         if (!nodeSizing)
             return;
         const { widthSize, paddingSize, borderSize } = nodeSizing;
+        const defaultValue = 'x';
         hiddenNode.style.setProperty('width', widthSize, 'important');
-        hiddenNode.value = node.value || node.placeholder || 'x';
+        hiddenNode.value = node.value || node.placeholder || defaultValue;
         let height = hiddenNode.scrollHeight;
-        hiddenNode.value = 'x';
+        hiddenNode.value = defaultValue;
         const rowHeight = hiddenNode.scrollHeight - paddingSize;
         const minHeight = minRows * rowHeight + paddingSize + borderSize;
         height = Math.max(minHeight, height);

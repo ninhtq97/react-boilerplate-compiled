@@ -3,6 +3,7 @@ export type Tail<X extends readonly any[]> = ((...args: X) => any) extends (arg:
 export type Status = 'FAILED' | 'IDLE' | 'LOADING';
 export type Position = 'top' | 'bottom' | 'left' | 'right';
 export type Start = 'start';
+export type Center = 'center';
 export type End = 'end';
 export type Placement = `${Position}-${Start}` | Position | `${Position}-${End}`;
 export type TScreenDimension = {

@@ -1,19 +1,10 @@
 {
-  "name": "@ninhtq/react-boilerplate",
+  "name": "react-boilerplate",
   "version": "0.1.0",
-  "description": "ReactJs - Boilerplate (@boilerplate)",
   "private": true,
-  "keywords": [
-    "react",
-    "boilerplate"
-  ],
-  "author": "ninhtq <tranquangninh97@gmail.com>",
-  "main": "./dist/index.cjs.js",
-  "module": "./dist/index.esm.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "./dist"
-  ],
+  "main": "build/dist/index.cjs.js",
+  "module": "build/dist/index.esm.js",
+  "types": "build/dist/index.d.ts",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.4",
     "@rollup/plugin-json": "^6.0.0",
@@ -28,6 +19,7 @@
     "date-fns": "^2.30.0",
     "framer-motion": "^10.15.1",
     "postcss": "^8.4.28",
+    "prettier-plugin-tailwindcss": "^0.5.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-tailwindcss-datepicker": "^1.6.6",
@@ -35,6 +27,7 @@
     "rollup": "^2.79.1",
     "slugify": "^1.6.6",
     "sweetalert2": "^11.7.20",
+    "tailwind-merge": "^2.0.0",
     "tailwindcss": "^3.3.3",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.5"
@@ -46,7 +39,8 @@
     "react": "^18.2.0",
     "react-tailwindcss-datepicker": "^1.6.6",
     "slugify": "^1.6.6",
-    "sweetalert2": "^11.7.20"
+    "sweetalert2": "^11.7.20",
+    "tailwind-merge": "^2.0.0"
   },
   "scripts": {
     "prebuild": "rimraf ./build/dist",

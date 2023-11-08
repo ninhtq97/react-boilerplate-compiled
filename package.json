@@ -1,10 +1,19 @@
 {
   "name": "@ninhtq/react-boilerplate",
   "version": "0.1.0",
+  "description": "ReactJs - Boilerplate (@boilerplate)",
   "private": true,
-  "main": "build/dist/index.cjs.js",
-  "module": "build/dist/index.esm.js",
-  "types": "build/dist/index.d.ts",
+  "keywords": [
+    "react",
+    "boilerplate"
+  ],
+  "author": "ninhtq <tranquangninh97@gmail.com>",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "./dist"
+  ],
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.4",
     "@rollup/plugin-json": "^6.0.0",

@@ -45,7 +45,7 @@
   "scripts": {
     "prebuild": "rimraf ./build/dist",
     "build": "rollup -c",
-    "format": "prettier --write \"lib/**/*.ts\" \"test/**/*.ts\"",
-    "lint": "eslint \"{lib}/**/*.ts\" --fix"
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint \"{src}/**/*.ts\" --fix"
   }
 }

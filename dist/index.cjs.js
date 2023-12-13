@@ -32656,9 +32656,7 @@ const createAxiosApi = (method, url, variables, config) => new Promise((resolve,
         data: method !== 'GET' ? variables : undefined,
         ...config,
     };
-    axios__default["default"](axiosConfig).then((response) => resolve(response.data), (error) => {
-        reject(error.response ? error.response.data : defaults.error);
-    });
+    axios__default["default"](axiosConfig).then((response) => resolve(response.data), (error) => reject(error.response ? error.response.data : defaults.error));
 });
 const api = {
     get: (...args) => createAxiosApi('GET', ...args),

@@ -32712,7 +32712,7 @@ const excludeEmptyValue = (obj) => {
 const recursiveRoutes = (routes, parentPath = '/') => {
     for (let key in routes) {
         if (typeof routes[key] === 'object') {
-            recursiveRoutes(routes[key], parentPath + routes[key].SELF + '/');
+            recursiveRoutes(routes[key], parentPath + (routes[key].SELF ? `${routes[key].SELF}/` : ''));
         }
         else {
             if (key !== 'SELF') {

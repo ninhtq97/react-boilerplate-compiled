@@ -34,6 +34,9 @@ export type TDateRange = {
 export type TStatus = {
     status: Status;
 };
+export type TId = {
+    id: string;
+};
 export type TTimestamp = {
     createdAt: string;
     updatedAt: string;

@@ -48,3 +48,7 @@ export type Option = {
     value: string | number;
     suffix?: string;
 };
+export type HeadCell = {
+    id: string;
+    label: string | React.ReactNode;
+} & React.ThHTMLAttributes<HTMLTableCellElement>;

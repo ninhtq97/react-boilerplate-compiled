@@ -1,8 +1,5 @@
 /// <reference types="react" />
-export type HeadCell = {
-    id: string;
-    label: string | React.ReactNode;
-} & React.ThHTMLAttributes<HTMLTableCellElement>;
+import { HeadCell } from 'types';
 type Props = {
     columns?: HeadCell[];
 } & React.HTMLAttributes<HTMLElement>;

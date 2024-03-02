@@ -1,4 +1,4 @@
-import { HeadCell } from '../components/Table';
+import { HeadCell } from 'types';
 declare const useExport: <T>(COLUMNS: HeadCell[], excelData: T[]) => {
     HEADING: {};
     excelData: T[];

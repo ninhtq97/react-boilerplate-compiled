@@ -44,7 +44,7 @@
   "peerDependencies": {
     "axios": "^1.4.0",
     "date-fns": "^2.30.0",
-    "framer-motion": "^10.15.1",
+    "framer-motion": "^10.0.0 || ^11.0.0",
     "react": "^18.2.0",
     "react-tailwindcss-datepicker": "^1.6.6",
     "slugify": "^1.6.6",

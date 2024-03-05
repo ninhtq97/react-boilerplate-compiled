@@ -32875,7 +32875,7 @@ const calcPosition$1 = (offset, placement, $linkRef, $popoverRef) => {
         const linkCenterX = linkRect.left + linkRect.width / 2;
         const placements = {
             'top-start': {
-                top: popoverRect.height - margin + window.scrollY,
+                top: linkRect.top - popoverRect.height - margin + window.scrollY,
                 left: linkRect.left,
             },
             top: {

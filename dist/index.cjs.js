@@ -1565,8 +1565,19 @@ const toSlug = (str, options) => {
         ...options,
     });
 };
-const toIntlNumber = (amount, locales = 'de-DE') => (+amount ? new Intl.NumberFormat(locales).format(+amount) : amount);
+const toIntlNumber = (amount, locales = 'de-DE') => `${+amount ? new Intl.NumberFormat(locales).format(+amount) : amount}`;
 const toCurrency = (amount, currency = 'đ') => `${toIntlNumber(amount)}${currency}`;
+const toLocaleNumber = (amount, locales = 'de-DE') => {
+    const thousandSeparator = Intl.NumberFormat(locales)
+        .format(11111)
+        .replace(/\p{Number}/gu, '');
+    const decimalSeparator = Intl.NumberFormat(locales)
+        .format(1.1)
+        .replace(/\p{Number}/gu, '');
+    return parseFloat(amount
+        .replace(new RegExp(`\\${thousandSeparator}`, 'g'), '')
+        .replace(new RegExp(`\\${decimalSeparator}`), '.'));
+};
 
 function cn(...inputs) {
     return tailwindMerge.twMerge(clsx__default["default"](inputs));
@@ -33034,7 +33045,7 @@ const Pagination = ({ current, currentSize = PAGE.SIZE, total, totalItem, onChan
     const onChangeSize = (number) => {
         onChange({ page: PAGE.NUMBER, take: number });
     };
-    return (jsxRuntimeExports.jsxs("div", { className: "pagination", children: [withChangeSize && (jsxRuntimeExports.jsxs("div", { className: "pagination-size", children: [jsxRuntimeExports.jsx("p", { className: "pagination-size__label", children: sizeLable }), jsxRuntimeExports.jsx("div", { className: "pagination-size__select", children: jsxRuntimeExports.jsx(Select, { isFilterSearch: false, placement: "top-start", value: currentSize, onChange: (selected) => onChangeSize(Array.isArray(selected) ? +selected[0] : +selected), options: SIZE_OPTIONS }) })] })), jsxRuntimeExports.jsxs("div", { className: `pagination-container ${!withChangeSize ? 'justify-center' : ''}`, children: [current > 1 && (jsxRuntimeExports.jsx(Item, { current: current, number: 1, onClick: () => goToPage(1), children: jsxRuntimeExports.jsx(Icon, { icon: jsxRuntimeExports.jsx(ArrowLeft, {}) }) })), nums.map((number) => (jsxRuntimeExports.jsx(Item, { current: current, number: number, onClick: () => goToPage(number) }, number))), total > 0 && current !== total && (jsxRuntimeExports.jsx(Item, { current: current, number: total, onClick: () => goToPage(total), children: jsxRuntimeExports.jsx(Icon, { icon: jsxRuntimeExports.jsx(ArrowRight, {}) }) }))] })] }));
+    return (jsxRuntimeExports.jsxs("div", { className: "pagination", children: [withChangeSize && (jsxRuntimeExports.jsxs("div", { className: "pagination-size", children: [jsxRuntimeExports.jsx("p", { className: "pagination-size__label", children: sizeLable }), jsxRuntimeExports.jsx("div", { className: "pagination-size__select", children: jsxRuntimeExports.jsx(Select, { isFilterSearch: false, value: currentSize, onChange: (selected) => onChangeSize(Array.isArray(selected) ? +selected[0] : +selected), options: SIZE_OPTIONS }) })] })), jsxRuntimeExports.jsxs("div", { className: `pagination-container ${!withChangeSize ? 'justify-center' : ''}`, children: [current > 1 && (jsxRuntimeExports.jsx(Item, { current: current, number: 1, onClick: () => goToPage(1), children: jsxRuntimeExports.jsx(Icon, { icon: jsxRuntimeExports.jsx(ArrowLeft, {}) }) })), nums.map((number) => (jsxRuntimeExports.jsx(Item, { current: current, number: number, onClick: () => goToPage(number) }, number))), total > 0 && current !== total && (jsxRuntimeExports.jsx(Item, { current: current, number: total, onClick: () => goToPage(total), children: jsxRuntimeExports.jsx(Icon, { icon: jsxRuntimeExports.jsx(ArrowRight, {}) }) }))] })] }));
 };
 
 const Table = ({ className, columns, children }) => {
@@ -33148,6 +33159,7 @@ exports.toCurrency = toCurrency;
 exports.toErrorWithMessage = toErrorWithMessage;
 exports.toFixedNumber = toFixedNumber;
 exports.toIntlNumber = toIntlNumber;
+exports.toLocaleNumber = toLocaleNumber;
 exports.toSlug = toSlug;
 exports.unique = unique;
 exports.useDebounce = useDebounce;

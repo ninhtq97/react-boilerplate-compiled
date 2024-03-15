@@ -8,5 +8,6 @@ export declare const toSlug: (str: string, options?: {
     locale?: string;
     trim?: boolean;
 }) => string;
-export declare const toIntlNumber: (amount: string | number, locales?: string) => string | number;
+export declare const toIntlNumber: (amount: string | number, locales?: string) => string;
 export declare const toCurrency: (amount: string | number, currency?: string) => string;
+export declare const toLocaleNumber: (amount: string, locales?: string) => number;

@@ -1,6 +1,7 @@
 /// <reference types="react" />
 import { Option, Placement } from 'types';
 type Props = {
+    floating?: boolean;
     className?: string;
     popoverClassName?: string;
     isMultiple?: boolean;

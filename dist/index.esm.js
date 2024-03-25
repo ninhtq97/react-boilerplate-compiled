@@ -1591,9 +1591,9 @@ const recursiveRoutes = (routes, parentPath = '/') => {
     return routes;
 };
 
-const CustomDatePicker = ({ floating, error, helperText, ...props }) => {
-    return (jsxRuntimeExports.jsxs("div", { className: cn('form-picker', floating && 'floating', props.value?.startDate && 'has-value', props.disabled && 'disabled'), children: [jsxRuntimeExports.jsx("div", { className: "label-picker", children: props.placeholder }), jsxRuntimeExports.jsx("label", { className: cn('picker-field', error && 'text-rose-500'), children: jsxRuntimeExports.jsx(Datepicker, { inputClassName: cn('relative transition-all duration-300 pr-14 w-full rounded-lg font-light text-sm placeholder-gray-400 placeholder:text-[.9375rem] placeholder:leading-[1.375rem] pl-3 focus:ring-0', error && 'placeholder:text-rose-500', floating
-                        ? props.placeholder && props.value?.startDate
+const CustomDatePicker = ({ floating, label, error, helperText, ...props }) => {
+    return (jsxRuntimeExports.jsxs("div", { className: cn('form-picker', floating && 'floating', props.value?.startDate && 'has-value', props.disabled && 'disabled'), children: [label && jsxRuntimeExports.jsx("div", { className: "label-picker", children: label }), jsxRuntimeExports.jsx("label", { className: cn('picker-field', error && 'text-rose-500'), children: jsxRuntimeExports.jsx(Datepicker, { inputClassName: cn('relative transition-all duration-300 pr-14 w-full rounded-lg font-light text-sm placeholder-gray-400 placeholder:text-[.9375rem] placeholder:leading-[1.375rem] pl-3 focus:ring-0', error && 'placeholder:text-rose-500', floating
+                        ? label && props.value?.startDate
                             ? 'pb-[.625rem] pt-6'
                             : 'py-[1.063rem]'
                         : 'py-4', props.disabled &&

@@ -5,13 +5,14 @@ type Props = {
     className?: string;
     popoverClassName?: string;
     isMultiple?: boolean;
-    isDisable?: boolean;
+    disabled?: boolean;
     isFilterSearch?: boolean;
     label?: string;
     value?: string | number | (string | number)[];
     placement?: Placement;
     options: Option[];
     isLoading?: boolean;
+    required?: boolean;
     placeholder?: string;
     error?: boolean;
     helperText?: string;

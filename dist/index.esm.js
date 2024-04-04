@@ -1458,7 +1458,7 @@ const Button = forwardRef(({ className, loading = false, loadingIndicator, child
         lg: 'py-3 px-6 text-lg',
     };
     return (jsxRuntimeExports.jsx("button", { className: twMerge('btn', variant, mapColor[color], mapSize[size], className), disabled: loading, onClick: loading ? undefined : onClick, ...props, ref: $ref, children: loading ? (jsxRuntimeExports.jsxs("div", { className: twMerge('flex items-center gap-2', variant === 'outlined'
-                ? mapColor[color]
+                ? 'text-current'
                 : [color === 'secondary' ? 'text-stone-800' : 'text-white']), children: [jsxRuntimeExports.jsx(Icon, { icon: jsxRuntimeExports.jsx(Spinner, { className: "animate-spin" }) }), loadingIndicator] })) : (jsxRuntimeExports.jsx("span", { className: twMerge('btn__content', color === 'secondary'
                 ? 'text-stone-800'
                 : [variant === 'outlined' ? 'text-current' : 'text-white']), children: children })) }));

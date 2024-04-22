@@ -14,7 +14,7 @@ export type TFilter = {
     page: number;
     take: number;
     keyword?: string;
-} & Record<string, any>;
+};
 export type TMeta = {
     page: number;
     take: number;
@@ -52,3 +52,7 @@ export type HeadCell = {
     id: string;
     label: string | React.ReactNode;
 } & React.ThHTMLAttributes<HTMLTableCellElement>;
+export type TAttachment = {
+    name: string;
+    path: string;
+};

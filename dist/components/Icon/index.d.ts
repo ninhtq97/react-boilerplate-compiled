@@ -17,4 +17,5 @@ export declare const Check: React.FC<IconProps>;
 export declare const Plus: React.FC<IconProps>;
 export declare const EyeOff: React.FC<IconProps>;
 export declare const Eye: React.FC<IconProps>;
+export declare const Upload: React.FC<IconProps>;
 export {};

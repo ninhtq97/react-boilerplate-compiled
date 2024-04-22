@@ -6,8 +6,8 @@ type Props = {
     options: Option[];
     onChange: (selected: Option) => void;
     deactivateDropdown: () => void;
-    isLoading: boolean;
-    isFilterSearch: boolean;
+    loading: boolean;
+    filterSearch: boolean;
     searchValue: string;
     setSearchValue: (keyword: string) => void;
 };

@@ -1,7 +1,7 @@
 /// <reference types="react" />
 type Props = {
     inverse?: boolean;
-    isLoading: boolean;
+    loading: boolean;
     hasMore: boolean;
     onNext: () => void;
     loader?: React.ReactNode;

@@ -1,14 +1,15 @@
 /// <reference types="react" />
-type Props = {
-    className?: string;
-    label?: string;
-    placeholder?: string;
-    disabled?: boolean;
-    error?: boolean;
-    helperText?: string;
-    value?: string;
-    merchantId?: string;
-    onChange?: (...event: any[]) => void;
-};
-declare const InputFile: import("react").ForwardRefExoticComponent<Props & import("react").RefAttributes<HTMLInputElement>>;
+import { TAttachment } from 'types';
+declare const InputFile: import("react").ForwardRefExoticComponent<{
+    label?: string | undefined;
+    placeholder?: string | undefined;
+    preview?: TAttachment[] | undefined;
+    disabled?: boolean | undefined;
+    error?: boolean | undefined;
+    helperText?: string | undefined;
+    maxFiles?: number | undefined;
+    value?: File[] | undefined;
+    onChange?: ((files: File[]) => void) | undefined;
+    onRemove?: ((...args: any[]) => void) | undefined;
+} & Omit<import("react").InputHTMLAttributes<HTMLElement>, "value" | "onChange"> & import("react").RefAttributes<HTMLInputElement>>;
 export default InputFile;

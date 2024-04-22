@@ -4,14 +4,14 @@ type Props = {
     floating?: boolean;
     className?: string;
     popoverClassName?: string;
-    isMultiple?: boolean;
+    multiple?: boolean;
     disabled?: boolean;
-    isFilterSearch?: boolean;
+    filterSearch?: boolean;
     label?: string;
     value?: string | number | (string | number)[];
     placement?: Placement;
     options: Option[];
-    isLoading?: boolean;
+    loading?: boolean;
     required?: boolean;
     placeholder?: string;
     error?: boolean;

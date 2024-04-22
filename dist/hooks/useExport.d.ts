@@ -1,9 +1,5 @@
 import { HeadCell } from 'types';
-declare const useExport: <T>(COLUMNS: HeadCell[], excelData: T[]) => {
-    HEADING: {};
-    excelData: T[];
-    wsCols: {
-        wch: number;
-    }[];
+declare const useExport: (COLUMNS: HeadCell[]) => {
+    onExport: <T>(data: T[], fileName: string) => void;
 };
 export default useExport;

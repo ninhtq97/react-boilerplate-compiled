@@ -1,5 +1,5 @@
 import { TFilter } from 'types';
-declare const useFilter: (state?: Partial<TFilter>) => {
+declare const useFilter: <T extends Object>(state?: Partial<T>) => {
     filter: TFilter;
     onChangeFilter: (data: Partial<TFilter>) => void;
 };

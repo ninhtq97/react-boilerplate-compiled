@@ -14,7 +14,7 @@ export type TFilter = {
     page: number;
     take: number;
     keyword?: string;
-};
+} & Record<string, any>;
 export type TMeta = {
     page: number;
     take: number;

@@ -9,7 +9,7 @@ type Props = {
     container?: string;
     width?: number;
     withCloseIcon?: boolean;
-    disableClickBackdrop?: boolean;
+    backdropDisabled?: boolean;
     isOpen?: boolean;
     onClose?: () => void;
     renderLink?: React.FC<TRenderLink>;

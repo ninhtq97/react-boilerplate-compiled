@@ -1,5 +1,5 @@
 # Installation
 
 ```bash
-$ npm i github:ninhtq97/uploader-compiled
+$ npm i github:ninhtq97/react-boilerplate-compiled
 ```
